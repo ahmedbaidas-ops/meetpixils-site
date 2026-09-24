@@ -1,0 +1,118 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MeetPixils — Battle Registration</title>
+<meta name="description" content="Register for the MeetPixils battle — real briefs, named judges, a ticking clock.">
+<link rel="icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Cairo:wght@400;700;800&family=IBM+Plex+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>:root{--plum:#0F010A;--panel:#2F263B;--cream:#FFFEEC;--orange:#EF5229;--o2:#FF7A4F;--lilac:#CCA4FD;--cyan:#2EBEEF;--green:#5FD39A}
+*{box-sizing:border-box}
+body{margin:0;background:var(--plum);color:var(--cream);font-family:Poppins,system-ui,sans-serif;font-size:15.5px;line-height:1.6;min-height:100vh}
+[dir=rtl] body,body[dir=rtl]{font-family:Cairo,Poppins,sans-serif}
+.mono{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase}
+.wrap{max-width:920px;margin:0 auto;padding:0 clamp(18px,5vw,44px)}
+header.top{display:flex;align-items:center;gap:14px;padding:20px 0}
+header.top .spacer{margin-inline-start:auto}
+.cut8{clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px)}
+.cut12{clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px)}
+.cut16{clip-path:polygon(16px 0,100% 0,100% calc(100% - 16px),calc(100% - 16px) 100%,0 100%,0 16px)}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--orange);color:var(--plum);border:0;font-family:"IBM Plex Mono",monospace;font-size:13px;font-weight:700;letter-spacing:.02em;padding:15px 26px;cursor:pointer;text-decoration:none;transition:transform .2s cubic-bezier(.16,1,.3,1),background .2s}
+.btn:hover{transform:translateY(-2px);background:var(--o2)}
+.btn:disabled{opacity:.55;cursor:wait;transform:none}
+.btn.ghost{background:transparent;color:var(--cream);border:1px solid rgba(255,254,236,.32)}
+.btn.ghost:hover{background:rgba(255,254,236,.08)}
+.pill{display:inline-block;background:var(--orange);color:var(--plum);font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:700;letter-spacing:.08em;padding:6px 12px}
+h1{font-size:clamp(34px,7vw,64px);font-weight:800;letter-spacing:-.035em;line-height:1.02;margin:14px 0;text-wrap:balance}
+[dir=rtl] h1{letter-spacing:0;line-height:1.32}
+.dek{max-width:52ch;font-size:clamp(15px,1.8vw,17px);color:rgba(255,254,236,.72)}
+.card{background:rgba(255,254,236,.035);border:1px solid rgba(255,254,236,.16);padding:24px 26px}
+.field{display:grid;gap:6px;margin-bottom:16px}
+.field span{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;opacity:.6}
+.field input,.field select,.field textarea{font-family:inherit;font-size:15px;padding:13px 14px;min-height:48px;background:rgba(255,254,236,.06);color:var(--cream);border:1px solid rgba(255,254,236,.26);border-radius:0;outline:0;width:100%}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(46,190,239,.22)}
+.err{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--o2)}
+.ok{color:var(--green)}
+.deco{position:fixed;inset-inline-end:-40px;top:80px;width:260px;height:300px;pointer-events:none;opacity:.5;z-index:0}
+.deco i{position:absolute;background:var(--orange);animation:pop .6s cubic-bezier(.16,1,.3,1) both}
+@keyframes pop{from{opacity:0;transform:translateY(12px) scale(.6)}to{opacity:var(--o,1);transform:none}}
+.strip{height:6px;background:repeating-linear-gradient(90deg,var(--orange) 0 16px,transparent 16px 40px);opacity:.4;margin-top:60px}
+main{position:relative;z-index:1}
+footer{padding:40px 0 30px;font-family:"IBM Plex Mono",monospace;font-size:11px;opacity:.45}
+@media(prefers-reduced-motion:reduce){.deco i,.btn{animation:none;transition:none}}
+@media(max-width:720px){.deco{display:none}}
+ .deco i{background:var(--lilac)}</style>
+</head><body>
+<div class="deco" aria-hidden="true">
+  <i style="width:52px;height:52px;inset-inline-end:70px;top:40px;--o:1" class="cut12"></i>
+  <i style="width:26px;height:26px;inset-inline-end:150px;top:120px;--o:.7;animation-delay:.1s" class="cut8"></i>
+  <i style="width:30px;height:30px;inset-inline-end:52px;top:150px;--o:.85;background:var(--orange);animation-delay:.06s" class="cut8"></i>
+  <i style="width:16px;height:16px;inset-inline-end:118px;top:208px;--o:.5;background:var(--cyan);animation-delay:.2s" class="cut8"></i>
+</div>
+<main class="wrap">
+<header class="top">
+  <svg width="44" height="18" viewBox="0 0 235 96" aria-label="MeetPixils"><path fill="#CCA4FD" d="M93.7838 0V47.8009L78.2648 47.7211C75.9043 47.7211 73.5756 47.8168 71.3108 48.0242C57.4028 49.2682 46.9398 61.5335 46.9398 75.7605V95.4423H0.0321426V47.8009H20.2403C20.336 47.8009 20.4317 47.8009 20.5274 47.8009C35.2648 47.753 46.9398 34.8817 46.9398 19.8732V0.0159408H93.7838V0Z"/><path fill="#CCA4FD" d="M234.443 47.8008V95.4262H187.583V79.7C187.583 77.2916 187.503 74.931 187.296 72.6183C186.195 59.8906 176.371 50.0178 164.281 48.1357C150.803 49.7786 140.755 61.8364 140.755 75.7604V95.4422H93.8315V47.8008H114.087C114.183 47.8008 114.295 47.8008 114.391 47.8008C129.128 47.753 140.755 34.8976 140.755 19.8731V0.0158691H187.599V20.9098C187.647 35.9184 200.199 47.8008 214.953 47.8008H234.459H234.443Z"/></svg>
+  <span class="mono" style="opacity:.7">MeetBattle</span>
+  <span class="spacer"></span>
+  <a class="mono" href="/" style="color:var(--orange);text-decoration:none" data-i>Event tickets →|تذاكر الحدث ←</a>
+  <button id="lang" class="btn ghost" style="padding:9px 14px;font-size:12px">عربي</button>
+</header>
+
+<section style="padding:26px 0 6px">
+  <span class="pill" style="background:var(--lilac)" data-i>MEETBATTLE · SEASON 02|ميت باتل · الموسم ٠٢</span>
+  <h1 data-i>Enter the battle.|ادخل التحدي.</h1>
+  <p class="dek" data-i>Real briefs, named judges, a ticking clock — and a published scorecard before any battle starts. Register now; briefs and dates land in your inbox.|برييفات حقيقية، محكمين معروفين، وساعة عم تعد — ومعايير تحكيم منشورة قبل ما يبدأ أي تحدي. سجّل هلأ والتفاصيل بتوصلك عالإيميل.</p>
+</section>
+
+<section id="form" class="card cut16" style="max-width:640px;margin:16px 0 30px">
+  <div class="field"><span data-i>FULL NAME|الاسم الكامل</span><input id="name" required></div>
+  <div class="field"><span data-i>EMAIL|الإيميل</span><input id="email" type="email" required></div>
+  <div class="field"><span data-i>PHONE / WHATSAPP|الهاتف / واتساب</span><input id="phone" dir="ltr" placeholder="07…"></div>
+  <div class="field"><span data-i>DISCIPLINE|التخصص</span>
+    <select id="disc"><option>UX/UI</option><option>UX Research</option><option>Branding</option><option>Graphic</option><option>Motion &amp; 3D</option><option data-i>Other|غير ذلك</option></select></div>
+  <div class="field"><span data-i>LEVEL|المستوى</span>
+    <select id="level"><option data-i>Student|طالب</option><option data-i>Junior|مبتدئ</option><option data-i>Mid|متوسط</option><option data-i>Senior|خبير</option></select></div>
+  <div class="field"><span data-i>PORTFOLIO LINK (BEHANCE / SITE)|رابط البورتفوليو</span><input id="portfolio" dir="ltr" placeholder="https://"></div>
+  <div class="field"><span data-i>TEAM|الفريق</span>
+    <select id="team"><option value="solo" data-i>Solo — match me with a team|لحالي — طابقوني مع فريق</option><option value="team" data-i>I have a team|عندي فريق</option></select></div>
+  <div class="field" id="teamNameF" hidden><span data-i>TEAM NAME|اسم الفريق</span><input id="teamName"></div>
+  <input id="hp" style="display:none" tabindex="-1" autocomplete="off">
+  <button id="submit" class="btn cut12" style="background:var(--lilac)" data-i>Register →|سجّل ←</button>
+  <p id="msg" class="err" style="margin:12px 0 0"></p>
+</section>
+
+<section id="done" hidden class="card cut16" style="max-width:640px;border-color:var(--green);margin-bottom:30px">
+  <p style="font-size:22px;font-weight:800;margin:0 0 8px" class="ok" data-i>You're registered ✓|تسجّلت ✓</p>
+  <p style="margin:0;color:rgba(255,254,236,.78)" data-i>Briefs, team matching and dates arrive by email. Bring your sharpest ideas.|البرييفات وتوزيع الفرق والتواريخ بتوصلك عالإيميل. جهّز أفكارك.</p>
+</section>
+<div class="strip" style="background:repeating-linear-gradient(90deg,var(--lilac) 0 16px,transparent 16px 40px)"></div>
+<footer><span data-i>© 2026 MeetPixils · Amman, Jordan|© ٢٠٢٦ ميت بكسلز · عمّان، الأردن</span> · <a href="/" style="color:var(--orange)" data-i>Event tickets|تذاكر الحدث</a></footer>
+</main>
+<script>
+var AR=false;
+function t(){document.querySelectorAll('[data-i]').forEach(function(el){
+  if(!el.dataset.en){var p=el.innerHTML.split('|');el.dataset.en=p[0];el.dataset.ar=p[1]||p[0];}
+  el.innerHTML=AR?el.dataset.ar:el.dataset.en;});
+  document.documentElement.lang=AR?'ar':'en';document.body.dir=AR?'rtl':'ltr';
+  document.getElementById('lang').textContent=AR?'EN':'عربي';}
+document.getElementById('lang').onclick=function(){AR=!AR;try{localStorage.setItem('mp-lang',AR?'ar':'en')}catch(e){};t();};
+try{AR=localStorage.getItem('mp-lang')==='ar'}catch(e){}
+t();
+document.getElementById('team').onchange=function(){document.getElementById('teamNameF').hidden=this.value!=='team'};
+document.getElementById('submit').onclick=function(){
+ var msg=document.getElementById('msg');msg.textContent='';
+ var name=document.getElementById('name').value.trim(),email=document.getElementById('email').value.trim();
+ if(!name||!/.+@.+\..+/.test(email)){msg.textContent=AR?'الاسم والإيميل مطلوبين':'Name and a valid email are required';return;}
+ var b=this;b.disabled=true;
+ fetch('/api/entries.php',{method:'POST',headers:{'Content-Type':'application/json'},
+  body:JSON.stringify({_kind:'battle-reg',name:name,email:email,
+   phone:document.getElementById('phone').value,discipline:document.getElementById('disc').value,
+   level:document.getElementById('level').value,portfolio:document.getElementById('portfolio').value,
+   team:document.getElementById('team').value,team_name:document.getElementById('teamName').value,
+   _hp:document.getElementById('hp').value})})
+ .then(function(r){return r.json().then(function(j){return{r:r,j:j}})})
+ .then(function(x){b.disabled=false;
+  if(!x.r.ok||!x.j.ok){msg.textContent='✗ '+(x.j.error||('HTTP '+x.r.status));return;}
+  document.getElementById('form').hidden=true;document.getElementById('done').hidden=false;
+  document.getElementById('done').scrollIntoView({behavior:'smooth'});})
+ .catch(function(){b.disabled=false;msg.textContent=AR?'الشبكة ما ردّت — جرب كمان مرة':'Network error — try again';});};
+</script></body></html>
