@@ -148,3 +148,45 @@ function mp_b_alert(array $entry, string $ref): string {
   $lines[] = 'Ref ' . $ref;
   return implode("\n", $lines);
 }
+
+/* ---------------- scarcity + social proof ---------------- */
+
+/** Public display name: "Hala Al Ali" → "Hala A."; Arabic or single names → first name only. */
+function mp_bt_display(string $full, string $mode = 'first+initial'): string {
+  $full = trim(preg_replace('/\s+-\s+.*$/u', '', $full) ?? '');          // drop "Name - ux ui designer" tails
+  $parts = preg_split('/\s+/u', $full) ?: [];
+  $first = $parts[0] ?? '';
+  if ($first === '') return '';
+  $isLatin = (bool)preg_match('/^[\p{Latin}\'’-]+$/u', $first);
+  $first = $isLatin ? mb_convert_case(mb_strtolower($first), MB_CASE_TITLE) : $first;
+  $last = count($parts) > 1 ? $parts[count($parts) - 1] : '';
+  if ($mode === 'initials') return mb_strtoupper(mb_substr($first, 0, 1) . ($last !== '' ? mb_substr($last, 0, 1) : ''));
+  if (!$isLatin || $last === '') return $first;
+  return $first . ' ' . mb_strtoupper(mb_substr($last, 0, 1)) . '.';
+}
+
+/**
+ * Live numbers: joined = seed + people registered on the site;
+ * spots left drop by 1 per team registration and 1 per 3 solo/friends people.
+ */
+function mp_bt_stats(array $entries, array $seed, int $formed, int $leftBase, string $mode): array {
+  $teams = 0; $loose = 0; $people = 0; $faces = [];
+  $roleColour = ['ux-research' => 'ux', 'product' => 'product', 'brand' => 'brand'];
+  foreach ($entries as $e) {
+    if (($e['_kind'] ?? '') !== 'battle-reg' || !is_array($e['members'] ?? null)) continue;
+    $n = count($e['members']); $people += $n;
+    if (($e['mode'] ?? '') === 'team') $teams++; else $loose += $n;
+    foreach ($e['members'] as $m) $faces[] = [mp_bt_display((string)($m['name'] ?? ''), $mode), $roleColour[$m['role'] ?? ''] ?? 'ux'];
+  }
+  $left = max(0, $leftBase - $teams - intdiv($loose, 3));
+  $faces = array_merge(array_reverse($faces), array_reverse(array_map(fn($s) => [$mode === 'initials' ? mp_bt_display($s[0], 'initials') : $s[0], $s[1]], $seed)));
+  if ($mode === 'none') $faces = array_map(fn($f) => ['', $f[1]], $faces);
+  return [
+    'joined' => count($seed) + $people,
+    'teams_formed' => $formed + ($leftBase - $left),
+    'teams_left' => $left,
+    'teams_total' => $formed + $leftBase,
+    'full' => $left === 0,
+    'faces' => array_slice($faces, 0, 12),
+  ];
+}

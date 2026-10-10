@@ -7,6 +7,7 @@
  */
 require __DIR__ . '/config.php';
 require __DIR__ . '/battle-lib.php';
+@include __DIR__ . '/battle-config.php';
 require __DIR__ . '/wa-lib.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') mp_json_out(405, ['error' => 'method not allowed']);
@@ -32,13 +33,18 @@ if ($dupes) {
   flock($fp, LOCK_UN); fclose($fp);
   mp_json_out(409, ['error' => 'Already registered: ' . implode(', ', $dupes) . '. To change details, message us on WhatsApp.', 'field' => 'duplicate', 'emails' => $dupes]);
 }
-$list[] = ['_kind' => 'battle-reg', '_ts' => gmdate('c'), 'ref' => $ref] + $entry;
+$waitlist = false;
+if (defined('MP_BT_SEED')) {
+  $st = mp_bt_stats($list, MP_BT_SEED, MP_BT_TEAMS_FORMED, MP_BT_TEAMS_LEFT, 'none');
+  $waitlist = $st['full'];
+}
+$list[] = ['_kind' => 'battle-reg', '_ts' => gmdate('c'), 'ref' => $ref] + ($waitlist ? ['waitlist' => true] : []) + $entry;
 rewind($fp); ftruncate($fp, 0);
 fwrite($fp, json_encode($list, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
 fflush($fp); flock($fp, LOCK_UN); fclose($fp);
 
 // ---- alerts: never block or fail the registration ----
-$text = mp_b_alert($entry, $ref);
+$text = ($waitlist ? "⏳ WAITLIST — teams are full\n" : '') . mp_b_alert($entry, $ref);
 $wa = mp_wa_send($text);
 if (defined('MP_NOTIFY_EMAIL') && MP_NOTIFY_EMAIL !== '') {
   @mail(MP_NOTIFY_EMAIL, 'MeetBattle registration ' . $ref, $text, "From: no-reply@meetpixils.com\r\nContent-Type: text/plain; charset=utf-8");
@@ -58,4 +64,4 @@ if ($wa !== 'off') {
     flock($fp, LOCK_UN); fclose($fp);
   }
 }
-mp_json_out(200, ['ok' => true, 'ref' => $ref, 'wa' => $wa]);
+mp_json_out(200, ['ok' => true, 'ref' => $ref, 'wa' => $wa, 'waitlist' => $waitlist]);

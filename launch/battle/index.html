@@ -117,7 +117,7 @@ fieldset{border:0;margin:0;padding:0;min-width:0}
 </header>
 
 <section style="padding:22px 0 4px">
-  <span class="pill" style="background:var(--lilac)" data-i>REGISTRATION OPEN|التسجيل مفتوح</span>
+  <span class="pill" id="bScar" style="background:var(--orange)">Only 3 teams left · 41 registered</span>
   <h1 data-i>Enter the battle.|ادخل التحدي.</h1>
   <p class="dek" data-i>Real briefs, named judges, a ticking clock. Every team is three people — one of each role. Coming solo? We'll complete your trio. <b>Portfolio link required for everyone.</b>|برييفات حقيقية، محكّمين معروفين، وساعة عم تعدّ. كل فريق من ثلاثة — واحد من كل دور. جاي لحالك؟ منكمّلك الفريق. <b>رابط البورتفوليو إجباري للكل.</b></p>
   <div class="trio" aria-label="Team composition">
@@ -459,6 +459,7 @@ function success(j){
     : mode === 'team'
     ? L('Team ' + team + ' is registered. Briefs and dates go to all three of you by email and WhatsApp.', 'فريق ' + team + ' تسجّل. البرييفات والمواعيد بتوصل للثلاثة عالإيميل والواتساب.')
     : L("You're all registered. We'll place each of you in a different team and let you know by email and WhatsApp.", 'تسجّلتوا كلكم. رح نوزّع كل واحد على فريق مختلف ونخبركم عالإيميل والواتساب.');
+  if (j.waitlist) $('doneText').textContent = L("Teams filled up just before you — you're first in line on the waitlist. We'll message you if a spot opens.", 'الفرق اكتملت قبلك بشوي — إنت أول واحد بقائمة الانتظار. منبعتلك إذا فضي مكان.');
   var msg = 'Hi MeetBattle — I just registered (ref ' + j.ref + (team ? ', ' + team : '') + ').';
   $('waLink').href = 'https://wa.me/' + WA + '?text=' + encodeURIComponent(msg);
   $('shareLink').href = 'https://wa.me/?text=' + encodeURIComponent(L('I just registered for MeetBattle — teams of three, portfolio link required. Join: ', 'سجّلت بميت باتل — فرق من ثلاثة، ورابط البورتفوليو إجباري. سجّل هون: ') + location.origin + '/battle/');
@@ -473,6 +474,15 @@ $('again').addEventListener('click', function(){
 });
 $('lang').addEventListener('click', function(){ AR = !AR; try { localStorage.setItem('mp-lang', AR ? 'ar' : 'en'); } catch(e){} i18n(); render(); });
 try { AR = localStorage.getItem('mp-lang') === 'ar'; } catch(e){}
+var BST = null;
+function bScar(){
+  if (!BST) return; var el = $('bScar'), left = BST.teams_left;
+  var tA = function(n){ return n === 1 ? 'فريق واحد' : n === 2 ? 'فريقين' : n <= 10 ? arNum(n) + ' فرق' : arNum(n) + ' فريق'; };
+  el.textContent = BST.full ? L('Teams are full · waitlist open · ' + BST.joined + ' registered', 'الفرق اكتملت · قائمة الانتظار مفتوحة · ' + arNum(BST.joined) + ' مصمم/ة')
+    : L('Only ' + left + ' team' + (left === 1 ? '' : 's') + ' left · ' + BST.joined + ' registered', 'باقي ' + tA(left) + ' بس · ' + arNum(BST.joined) + ' مصمم/ة سجّلوا');
+}
+$('lang').addEventListener('click', bScar);
 i18n(); render();
+fetch('/api/battle-stats.php', {cache: 'no-store'}).then(function(r){ return r.ok ? r.json() : null; }).then(function(j){ if (j && typeof j.joined === 'number') { BST = j; bScar(); } }).catch(function(){});
 })();
 </script></body></html>

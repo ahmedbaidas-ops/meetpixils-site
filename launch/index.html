@@ -2,7 +2,7 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>MeetPixils — Battle & Tickets</title>
 <meta name="description" content="Register your team for MeetBattle, or get an early-bird ticket — Normal 15 JOD, VIP 25 JOD.">
-<meta property="og:title" content="MeetPixils — two ways in">
+<meta property="og:title" content="MeetBattle — only 3 teams left">
 <meta property="og:description" content="Enter MeetBattle with your team, or grab an early-bird ticket: Normal 15 JOD · VIP 25 JOD.">
 <link rel="icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -77,6 +77,27 @@ form>.step:first-child{margin-top:0}
 .cta{margin-top:auto;align-self:flex-start}
 .track{font-family:"IBM Plex Mono",monospace;font-size:12px;color:rgba(255,254,236,.65);margin:10px 0 0}
 .track a{color:var(--lilac)}
+.scar{display:inline-flex;align-items:center;gap:9px;background:var(--orange);color:var(--plum);font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:700;letter-spacing:.1em;padding:7px 12px;text-transform:uppercase}
+.scar i{width:8px;height:8px;background:var(--plum);animation:blink 1.2s steps(2,start) infinite}
+@keyframes blink{to{visibility:hidden}}
+.proof{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.faces{display:flex;margin-inline-start:-4px}
+.face{width:32px;height:32px;margin-inline-start:4px;display:grid;place-items:center;font-size:11.5px;font-weight:800;color:var(--plum);
+  clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px);opacity:0;animation:pop .5s cubic-bezier(.16,1,.3,1) both}
+.face.ux{background:var(--cyan)}.face.product{background:var(--lilac)}.face.brand{background:var(--orange)}
+.face.more{background:rgba(255,254,236,.14);color:var(--cream);font-family:"IBM Plex Mono",monospace;font-size:10.5px}
+.proof p{margin:0;flex:1;min-width:190px;font-size:13.5px;color:rgba(255,254,236,.75)}
+.proof b{color:var(--cream);font-size:18px;font-weight:800;font-variant-numeric:tabular-nums}
+.spots{display:grid;gap:8px}
+.blocks{display:flex;flex-wrap:wrap;gap:5px}
+.blk{width:18px;height:18px;clip-path:polygon(5px 0,100% 0,100% calc(100% - 5px),calc(100% - 5px) 100%,0 100%,0 5px)}
+.blk.on{background:var(--lilac)}
+.blk.open{background:var(--orange);animation:open 1.6s ease-in-out infinite}
+@keyframes open{50%{opacity:.35}}
+.spots span{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.06em;color:rgba(255,254,236,.7)}
+.spots b{color:var(--orange)}
+[dir=rtl] .scar,[dir=rtl] .spots span,[dir=rtl] .face.more{letter-spacing:0;font-family:Cairo,Poppins,sans-serif}
+@media(prefers-reduced-motion:reduce){.scar i,.blk.open{animation:none}.face{animation:none;opacity:1}}
 .vh{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;clip:rect(0 0 0 0)}
 </style></head><body>
 <div class="deco" aria-hidden="true">
@@ -93,7 +114,7 @@ form>.step:first-child{margin-top:0}
 </header>
 
 <section style="padding:22px 0 0">
-  <span class="pill" data-i>AMMAN · 2026|عمّان · ٢٠٢٦</span>
+  <span class="scar cut8" id="scar"><i aria-hidden="true"></i><span id="scarTxt">Only 3 teams left</span></span>
   <h1 data-i>Two ways in.|طريقتين للدخول.</h1>
   <p class="dek" data-i>Compete in MeetBattle with your team — or grab an early-bird ticket and be in the room.|نافس بميت باتل مع فريقك — أو احجز تذكرة بسعر الحجز المبكر وكون بالقاعة.</p>
 </section>
@@ -105,8 +126,10 @@ form>.step:first-child{margin-top:0}
       <span class="mono" style="color:var(--lilac)" data-i>MEETBATTLE|ميت باتل</span>
       <h2 data-i>Register for the battle|سجّل بالتحدي</h2>
       <p data-i>Teams of three — one UX researcher, one product designer, one brand designer. Coming solo? We'll complete your trio.|فرق من ثلاثة — باحث/ة تجربة، مصمم/ة منتجات، ومصمم/ة هوية. جاي لحالك؟ منكمّلك الفريق.</p>
+      <div class="proof"><div class="faces" id="faces" aria-hidden="true"></div><p id="joinedTxt"></p></div>
+      <div class="spots"><div class="blocks" id="blocks" role="img"></div><span id="spotsTxt"></span></div>
       <p style="font-size:13px" data-i>Portfolio link required for everyone.|رابط البورتفوليو إجباري للكل.</p>
-      <a class="btn cut12 cta" href="/battle/" style="background:var(--lilac)"><span data-i>Register →|سجّل ←</span></a>
+      <a class="btn cut12 cta" id="battleCta" href="/battle/" style="background:var(--lilac)"></a>
     </div>
   </div>
   <!-- tickets -->
@@ -159,9 +182,44 @@ function prices(){
   document.getElementById('ebBadge').hidden = !eb;
   document.getElementById('payNote').textContent = L('Pay with CliQ · your ticket is confirmed within ' + days + ' days.', 'الدفع عبر كليك · تذكرتك بتتأكد خلال ' + (days === 1 ? 'يوم' : days === 2 ? 'يومين' : arNum(days) + ' أيام') + '.');
 }
-document.getElementById('lang').addEventListener('click', function(){ AR = !AR; try { localStorage.setItem('mp-lang', AR ? 'ar' : 'en'); } catch(e){} i18n(); });
+var ST = {joined: 41, teams_left: 3, teams_formed: 8, teams_total: 11, full: false, faces: []}, COUNTED = false;
+function teamsAr(n){ return n === 1 ? 'فريق واحد' : n === 2 ? 'فريقين' : n <= 10 ? arNum(n) + ' فرق' : arNum(n) + ' فريق'; }
+function initials(name){ if (!name) return ''; var p = name.replace(/\./g, '').split(/\s+/); return (p[0] ? p[0][0] : '') + (p[1] ? p[1][0] : ''); }
+function stats(){
+  var left = ST.teams_left, full = ST.full || left === 0;
+  document.getElementById('scarTxt').textContent = full ? L('Teams are full · waitlist open', 'الفرق اكتملت · قائمة الانتظار مفتوحة')
+    : left === 1 ? L('Only 1 team left!', 'باقي فريق واحد بس!') : L('Only ' + left + ' teams left!', 'باقي ' + teamsAr(left) + ' بس!');
+  var named = ST.faces.filter(function(f){ return f[0]; }), shown = named.slice(0, 3).map(function(f){ return f[0]; });
+  var others = ST.joined - shown.length;
+  var joinedHTML = '<b id="cnt">' + N(COUNTED ? ST.joined : 0) + '</b> ' + L('designers registered', 'مصمم/ة سجّلوا');
+  if (shown.length) joinedHTML += ' — ' + shown.join(AR ? '، ' : ', ') + (others > 0 ? L(' and ' + others + ' more.', ' و' + arNum(others) + ' غيرهم.') : '.');
+  document.getElementById('joinedTxt').innerHTML = joinedHTML;
+  var faces = ST.faces.length ? ST.faces.slice(0, 7) : [['', 'ux'], ['', 'product'], ['', 'brand'], ['', 'ux'], ['', 'brand'], ['', 'product'], ['', 'ux']];
+  document.getElementById('faces').innerHTML = faces.map(function(f, i){
+    return '<span class="face ' + f[1] + '" style="animation-delay:' + (i * 60) + 'ms">' + initials(f[0]) + '</span>'; }).join('') +
+    (ST.joined > faces.length ? '<span class="face more" style="animation-delay:' + (faces.length * 60) + 'ms">+' + N(ST.joined - faces.length) + '</span>' : '');
+  var b = ''; for (var i = 0; i < ST.teams_total; i++) b += '<i class="blk ' + (i < ST.teams_total - left ? 'on' : 'open') + '"></i>';
+  var blocks = document.getElementById('blocks'); blocks.innerHTML = b;
+  blocks.setAttribute('aria-label', L(ST.teams_total - left + ' of ' + ST.teams_total + ' teams formed', arNum(ST.teams_total - left) + ' من ' + arNum(ST.teams_total) + ' فرق تشكّلت'));
+  document.getElementById('spotsTxt').innerHTML = full ? L('All ' + ST.teams_total + ' teams formed', 'كل الفرق تشكّلت')
+    : L(ST.teams_formed + ' teams formed · <b>only ' + left + ' spot' + (left === 1 ? '' : 's') + ' left</b>', arNum(ST.teams_formed) + ' فرق تشكّلت · <b>باقي ' + arNum(left) + ' بس</b>');
+  document.getElementById('battleCta').innerHTML = (full ? L('Join the waitlist', 'سجّل بقائمة الانتظار') : L('Grab a spot', 'احجز مكانك')) + ' <span aria-hidden="true">' + L('→', '←') + '</span>';
+}
+function countUp(){
+  if (COUNTED) return; COUNTED = true;
+  var el = document.getElementById('cnt'), t0 = null;
+  if (!el || matchMedia('(prefers-reduced-motion: reduce)').matches) { stats(); return; }
+  (function f(t){ if (!t0) t0 = t; var k = Math.min(1, (t - t0) / 900), v = Math.round(ST.joined * (1 - Math.pow(1 - k, 3)));
+    var cur = document.getElementById('cnt'); if (cur) cur.textContent = N(v); if (k < 1) requestAnimationFrame(f); })(performance.now());
+}
+document.getElementById('lang').addEventListener('click', function(){ AR = !AR; try { localStorage.setItem('mp-lang', AR ? 'ar' : 'en'); } catch(e){} i18n(); stats(); });
 try { AR = localStorage.getItem('mp-lang') === 'ar'; } catch(e){}
 i18n();
+stats();
+if ('IntersectionObserver' in window) new IntersectionObserver(function(es, o){ if (es[0].isIntersecting) { countUp(); o.disconnect(); } }).observe(document.getElementById('joinedTxt')); else countUp();
+setTimeout(countUp, 1500);
+fetch('/api/battle-stats.php', {cache: 'no-store'}).then(function(r){ return r.ok ? r.json() : null; })
+  .then(function(j){ if (j && typeof j.joined === 'number') { ST = j; stats(); if (COUNTED) { var el = document.getElementById('cnt'); if (el) el.textContent = N(ST.joined); } } }).catch(function(){});
 fetch('/api/ticket-info.php', {cache: 'no-store'}).then(function(r){ return r.ok ? r.json() : null; })
   .then(function(j){ if (j && j.passes) { INFO = j; prices(); } }).catch(function(){});
 })();
