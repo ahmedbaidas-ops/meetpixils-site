@@ -764,11 +764,11 @@ function Entries({ pw }: { pw: string }) {
   const [statusFilter, setStatusFilter] = React.useState("all");
   const [q, setQ] = React.useState("");
   const shown = rows.filter((r) =>
-    (kind === "all" || (kind === "other" ? r._kind !== "ticket" && r._kind !== "donation" && r._kind !== "evaluation" : r._kind === kind)) &&
+    (kind === "all" || (kind === "other" ? r._kind !== "ticket" && r._kind !== "donation" && r._kind !== "evaluation" && r._kind !== "battle-reg" : r._kind === kind)) &&
     (statusFilter === "all" || r.status === statusFilter) &&
     (!q || `${r.name} ${r.email} ${r.order}`.toLowerCase().includes(q.toLowerCase())));
   const exportCsv = () => {
-    const cols = ["_kind", "order", "status", "name", "email", "pass", "price", "loyalty", "amount", "initiative", "_ts", "_at"];
+    const cols = ["_kind", "order", "ref", "status", "mode", "team_name", "members_text", "name", "email", "phone", "pass", "price", "loyalty", "amount", "initiative", "wa", "_ts", "_at"];
     const esc = (v: string) => `"${String(v ?? "").replace(/"/g, '""')}"`;
     const csv = [cols.join(","), ...shown.map((r) => cols.map((c) => esc(r[c])).join(","))].join("\n");
     const a = document.createElement("a");
@@ -785,7 +785,7 @@ function Entries({ pw }: { pw: string }) {
         <button onClick={loadLive} style={{ ...inp, cursor: "pointer", background: CYAN, color: PLUM900, fontWeight: 700, border: 0 }}>
           ↻ Refresh
         </button>
-        {["all", "ticket", "donation", "evaluation", "other"].map((k) => (
+        {["all", "ticket", "battle-reg", "donation", "evaluation", "other"].map((k) => (
           <button key={k} onClick={() => setKind(k)} aria-pressed={kind === k}
                   style={{ ...inp, minHeight: 42, padding: "8px 15px", cursor: "pointer",
                            background: kind === k ? "rgba(255,254,236,.16)" : "transparent" }}>{k}</button>
@@ -814,6 +814,9 @@ function Entries({ pw }: { pw: string }) {
             {r.status ? <span style={{ color: r.status === "paid" ? "#5FD39A" : ORANGE, fontWeight: 700 }}> · {r.order ?? ""}</span> : null}
             {r.amount ? <span style={{ color: LILAC }}> · {r.initiative} · {r.amount}</span> : null}
             {r._kind === "evaluation" ? <span style={{ color: PERI }}> · {r.judge} scored {r.team} — {r.total}/100 ({r.comp})</span> : null}
+            {r._kind === "battle-reg" && r.members_text ? (
+              <span style={{ color: LILAC }}> · {String(r.mode).toUpperCase()}{r.team_name ? ` · ${r.team_name}` : ""} — {r.members_text}{r.wa === "failed" ? " · WA ✗" : ""}</span>
+            ) : null}
           </span>
           {r.receipt && <button onClick={() => viewProof(r.receipt)} style={{ ...inp, minHeight: 36, padding: "5px 12px", cursor: "pointer", fontSize: 11.5 }}>receipt</button>}
           {r.stamp && <button onClick={() => viewProof(r.stamp)} style={{ ...inp, minHeight: 36, padding: "5px 12px", cursor: "pointer", fontSize: 11.5 }}>stamp</button>}

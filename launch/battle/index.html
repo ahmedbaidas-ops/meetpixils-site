@@ -1,7 +1,9 @@
 <!doctype html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>MeetPixils — Battle Registration</title>
-<meta name="description" content="Register for the MeetPixils battle — real briefs, named judges, a ticking clock.">
+<title>MeetBattle — Register</title>
+<meta name="description" content="Register for MeetBattle — teams of three: one UX researcher, one product designer, one brand designer.">
+<meta property="og:title" content="MeetBattle — registration is open">
+<meta property="og:description" content="Teams of three. Real briefs, named judges, a ticking clock. Solo? We'll complete your trio. Portfolio link required for everyone.">
 <link rel="icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Cairo:wght@400;700;800&family=IBM+Plex+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -40,79 +42,437 @@ main{position:relative;z-index:1}
 footer{padding:40px 0 30px;font-family:"IBM Plex Mono",monospace;font-size:11px;opacity:.45}
 @media(prefers-reduced-motion:reduce){.deco i,.btn{animation:none;transition:none}}
 @media(max-width:720px){.deco{display:none}}
- .deco i{background:var(--lilac)}</style>
-</head><body>
+ .deco i{background:var(--lilac)}
+.deco i{background:var(--lilac)}
+:root{--ux:#2EBEEF;--pd:#CCA4FD;--br:#EF5229}
+.trio{display:grid;gap:10px;grid-template-columns:repeat(3,minmax(0,1fr));max-width:640px;margin:22px 0 6px}
+.trio div{border:1px solid rgba(255,254,236,.16);padding:12px 14px;display:grid;gap:3px}
+.trio b{font-size:14px}.trio span{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;opacity:.55}
+.sq{display:inline-block;width:10px;height:10px;margin-inline-end:7px;vertical-align:0;clip-path:polygon(3px 0,100% 0,100% calc(100% - 3px),calc(100% - 3px) 100%,0 100%,0 3px)}
+.step{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--lilac);margin:26px 0 10px}
+form>.step:first-child{margin-top:0}
+.choices{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.choice{position:relative;display:grid;gap:4px;padding:18px 20px;border:1px solid rgba(255,254,236,.22);cursor:pointer;transition:border-color .2s,background .2s}
+.choice input{position:absolute;opacity:0;pointer-events:none}
+.choice b{font-size:16px}.choice span{font-size:13.5px;color:rgba(255,254,236,.66)}
+.choice:has(input:checked){border-color:var(--lilac);background:rgba(204,164,253,.1)}
+.choice:has(input:focus-visible){outline:2px solid var(--o2);outline-offset:2px}
+.choice:hover{background:rgba(255,254,236,.04)}
+.two{display:grid;gap:0 14px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+fieldset{border:0;margin:0;padding:0;min-width:0}
+.mem{border:1px solid rgba(255,254,236,.16);padding:18px 20px 6px;margin-bottom:14px}
+.mem legend{float:left;width:100%;padding:0;margin:0 0 12px;display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px}
+.mem legend+*{clear:both}
+.rm{margin-inline-start:auto;font-family:"IBM Plex Mono",monospace;font-size:11px;background:none;border:1px solid rgba(255,254,236,.26);color:var(--cream);padding:7px 12px;cursor:pointer;min-height:36px}
+.rm:hover{border-color:var(--o2);color:var(--o2)}
+.roles{display:flex;flex-wrap:wrap;gap:8px;margin:2px 0 4px}
+.rp{position:relative;cursor:pointer}
+.rp input{position:absolute;opacity:0;pointer-events:none}
+.rp span{display:inline-flex;align-items:center;gap:7px;min-height:44px;padding:9px 14px;border:1px solid rgba(255,254,236,.26);font-size:13.5px;transition:background .15s,border-color .15s}
+.rp small{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.06em;opacity:.55;text-transform:uppercase}
+.rp input:checked+span{border-color:var(--c);background:color-mix(in srgb,var(--c) 20%,transparent)}
+.rp input:focus-visible+span{outline:2px solid var(--o2);outline-offset:2px}
+.rp:hover span{background:rgba(255,254,236,.05)}
+.meter{display:grid;gap:8px;grid-template-columns:repeat(3,minmax(0,1fr));margin:4px 0 16px}
+.slot{border:1px dashed rgba(255,254,236,.25);padding:10px 12px;font-size:12.5px;display:grid;gap:2px;transition:border-color .2s,background .2s}
+.slot span{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.07em;text-transform:uppercase;opacity:.6}
+.slot.ok{border-style:solid;border-color:var(--green);background:rgba(95,211,154,.07)}
+.slot.ok span{color:var(--green);opacity:1}
+.slot.dup{border-style:solid;border-color:var(--o2);background:rgba(239,82,41,.1)}
+.slot.dup span{color:var(--o2);opacity:1}
+.note{border:1px solid var(--o2);background:rgba(239,82,41,.1);padding:16px 18px;margin:0 0 16px}
+.note p{margin:0 0 12px;font-size:14px}
+.banner{border:1px solid var(--lilac);background:rgba(204,164,253,.1);padding:14px 18px;margin:0 0 16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.banner p{margin:0;font-size:14px;flex:1;min-width:220px}
+.ferr{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--o2);margin:-10px 0 14px;min-height:0}
+.ferr:empty{display:none}
+.field input[aria-invalid=true]{border-color:var(--o2)}
+.add{background:none;border:1px dashed rgba(255,254,236,.32);color:var(--cream);width:100%;min-height:48px;cursor:pointer;font-family:"IBM Plex Mono",monospace;font-size:12px;margin-bottom:16px}
+.add:hover{border-color:var(--lilac);color:var(--lilac)}
+.elig{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:rgba(255,254,236,.7);margin:6px 0 18px}
+.btn.ln{background:var(--lilac)}.btn.ln:hover{background:#dcc0ff}
+.link{background:none;border:0;color:var(--lilac);font:inherit;text-decoration:underline;cursor:pointer;padding:0}
+/* Arabic is cursive: tracking and the Latin mono face break letter joining */
+[dir=rtl] .mono,[dir=rtl] .step,[dir=rtl] .field span,[dir=rtl] .pill,[dir=rtl] .rp small,[dir=rtl] .slot span,[dir=rtl] .trio span,[dir=rtl] .add,[dir=rtl] .rm,[dir=rtl] .btn{letter-spacing:0;font-family:Cairo,Poppins,sans-serif}
+.rm{min-height:44px}#lang{min-height:44px}.link{padding:12px 0;min-height:44px}
+.clash{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--o2);margin:6px 0 0}.clash:empty{display:none}
+.prep{font-size:13px;color:rgba(255,254,236,.72);margin:-2px 0 16px}
+.saved{font-family:"IBM Plex Mono",monospace;font-size:10.5px;opacity:.5;margin:10px 0 0}
+.ask{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--cyan);margin-inline-start:auto;text-decoration:none;padding:12px 0;font-weight:400}
+.prog{font-family:"IBM Plex Mono",monospace;font-size:10.5px;opacity:.55;font-weight:400}
+.note .acts{display:flex;gap:10px;flex-wrap:wrap}
+@media(max-width:560px){.trio,.meter{grid-template-columns:1fr}#submit{width:100%;justify-content:center}}
+</style></head><body>
 <div class="deco" aria-hidden="true">
   <i style="width:52px;height:52px;inset-inline-end:70px;top:40px;--o:1" class="cut12"></i>
-  <i style="width:26px;height:26px;inset-inline-end:150px;top:120px;--o:.7;animation-delay:.1s" class="cut8"></i>
+  <i style="width:26px;height:26px;inset-inline-end:150px;top:120px;--o:.7;background:var(--cyan);animation-delay:.1s" class="cut8"></i>
   <i style="width:30px;height:30px;inset-inline-end:52px;top:150px;--o:.85;background:var(--orange);animation-delay:.06s" class="cut8"></i>
-  <i style="width:16px;height:16px;inset-inline-end:118px;top:208px;--o:.5;background:var(--cyan);animation-delay:.2s" class="cut8"></i>
 </div>
 <main class="wrap">
 <header class="top">
-  <svg width="44" height="18" viewBox="0 0 235 96" aria-label="MeetPixils"><path fill="#CCA4FD" d="M93.7838 0V47.8009L78.2648 47.7211C75.9043 47.7211 73.5756 47.8168 71.3108 48.0242C57.4028 49.2682 46.9398 61.5335 46.9398 75.7605V95.4423H0.0321426V47.8009H20.2403C20.336 47.8009 20.4317 47.8009 20.5274 47.8009C35.2648 47.753 46.9398 34.8817 46.9398 19.8732V0.0159408H93.7838V0Z"/><path fill="#CCA4FD" d="M234.443 47.8008V95.4262H187.583V79.7C187.583 77.2916 187.503 74.931 187.296 72.6183C186.195 59.8906 176.371 50.0178 164.281 48.1357C150.803 49.7786 140.755 61.8364 140.755 75.7604V95.4422H93.8315V47.8008H114.087C114.183 47.8008 114.295 47.8008 114.391 47.8008C129.128 47.753 140.755 34.8976 140.755 19.8731V0.0158691H187.599V20.9098C187.647 35.9184 200.199 47.8008 214.953 47.8008H234.459H234.443Z"/></svg>
-  <span class="mono" style="opacity:.7">MeetBattle</span>
+  <svg width="44" height="18" viewBox="0 0 235 96" aria-hidden="true"><path fill="#CCA4FD" d="M93.7838 0V47.8009L78.2648 47.7211C75.9043 47.7211 73.5756 47.8168 71.3108 48.0242C57.4028 49.2682 46.9398 61.5335 46.9398 75.7605V95.4423H0.0321426V47.8009H20.2403C20.336 47.8009 20.4317 47.8009 20.5274 47.8009C35.2648 47.753 46.9398 34.8817 46.9398 19.8732V0.0159408H93.7838V0Z"/><path fill="#CCA4FD" d="M234.443 47.8008V95.4262H187.583V79.7C187.583 77.2916 187.503 74.931 187.296 72.6183C186.195 59.8906 176.371 50.0178 164.281 48.1357C150.803 49.7786 140.755 61.8364 140.755 75.7604V95.4422H93.8315V47.8008H114.087C114.183 47.8008 114.295 47.8008 114.391 47.8008C129.128 47.753 140.755 34.8976 140.755 19.8731V0.0158691H187.599V20.9098C187.647 35.9184 200.199 47.8008 214.953 47.8008H234.459H234.443Z"/></svg>
+  <span class="mono" style="opacity:.75">MeetBattle</span>
   <span class="spacer"></span>
-  <a class="mono" href="/" style="color:var(--orange);text-decoration:none" data-i>Event tickets →|تذاكر الحدث ←</a>
-  <button id="lang" class="btn ghost" style="padding:9px 14px;font-size:12px">عربي</button>
+  <button id="lang" class="btn ghost" style="padding:9px 14px;font-size:12px" aria-label="Switch language">عربي</button>
 </header>
 
-<section style="padding:26px 0 6px">
-  <span class="pill" style="background:var(--lilac)" data-i>MEETBATTLE · SEASON 02|ميت باتل · الموسم ٠٢</span>
+<section style="padding:22px 0 4px">
+  <span class="pill" style="background:var(--lilac)" data-i>REGISTRATION OPEN|التسجيل مفتوح</span>
   <h1 data-i>Enter the battle.|ادخل التحدي.</h1>
-  <p class="dek" data-i>Real briefs, named judges, a ticking clock — and a published scorecard before any battle starts. Register now; briefs and dates land in your inbox.|برييفات حقيقية، محكمين معروفين، وساعة عم تعد — ومعايير تحكيم منشورة قبل ما يبدأ أي تحدي. سجّل هلأ والتفاصيل بتوصلك عالإيميل.</p>
+  <p class="dek" data-i>Real briefs, named judges, a ticking clock. Every team is three people — one of each role. Coming solo? We'll complete your trio. <b>Portfolio link required for everyone.</b>|برييفات حقيقية، محكّمين معروفين، وساعة عم تعدّ. كل فريق من ثلاثة — واحد من كل دور. جاي لحالك؟ منكمّلك الفريق. <b>رابط البورتفوليو إجباري للكل.</b></p>
+  <div class="trio" aria-label="Team composition">
+    <div><b><i class="sq" style="background:var(--ux)"></i><span data-i style="font:inherit;opacity:1;text-transform:none;letter-spacing:0">UX Researcher|باحث/ة تجربة</span></b><span data-i>UX/UI lane|مسار UX/UI</span></div>
+    <div><b><i class="sq" style="background:var(--pd)"></i><span data-i style="font:inherit;opacity:1;text-transform:none;letter-spacing:0">Product Designer|مصمم/ة منتجات</span></b><span data-i>UX/UI lane|مسار UX/UI</span></div>
+    <div><b><i class="sq" style="background:var(--br)"></i><span data-i style="font:inherit;opacity:1;text-transform:none;letter-spacing:0">Brand Designer|مصمم/ة هوية</span></b><span data-i>Branding lane|مسار الهوية</span></div>
+  </div>
 </section>
 
-<section id="form" class="card cut16" style="max-width:640px;margin:16px 0 30px">
-  <div class="field"><span data-i>FULL NAME|الاسم الكامل</span><input id="name" required></div>
-  <div class="field"><span data-i>EMAIL|الإيميل</span><input id="email" type="email" required></div>
-  <div class="field"><span data-i>PHONE / WHATSAPP|الهاتف / واتساب</span><input id="phone" dir="ltr" placeholder="07…"></div>
-  <div class="field"><span data-i>DISCIPLINE|التخصص</span>
-    <select id="disc"><option>UX/UI</option><option>UX Research</option><option>Branding</option><option>Graphic</option><option>Motion &amp; 3D</option><option data-i>Other|غير ذلك</option></select></div>
-  <div class="field"><span data-i>LEVEL|المستوى</span>
-    <select id="level"><option data-i>Student|طالب</option><option data-i>Junior|مبتدئ</option><option data-i>Mid|متوسط</option><option data-i>Senior|خبير</option></select></div>
-  <div class="field"><span data-i>PORTFOLIO LINK (BEHANCE / SITE)|رابط البورتفوليو</span><input id="portfolio" dir="ltr" placeholder="https://"></div>
-  <div class="field"><span data-i>TEAM|الفريق</span>
-    <select id="team"><option value="solo" data-i>Solo — match me with a team|لحالي — طابقوني مع فريق</option><option value="team" data-i>I have a team|عندي فريق</option></select></div>
-  <div class="field" id="teamNameF" hidden><span data-i>TEAM NAME|اسم الفريق</span><input id="teamName"></div>
-  <input id="hp" style="display:none" tabindex="-1" autocomplete="off">
-  <button id="submit" class="btn cut12" style="background:var(--lilac)" data-i>Register →|سجّل ←</button>
-  <p id="msg" class="err" style="margin:12px 0 0"></p>
-</section>
+<form id="form" class="card cut16" style="max-width:720px;margin:20px 0 34px" novalidate>
+  <p class="step" data-i>1 · Your name|١ · اسمك</p>
+  <label class="field" style="margin-bottom:6px"><span data-i>FULL NAME|الاسم الكامل</span>
+    <input id="you" autocomplete="name" aria-describedby="err-you"></label>
+  <p class="ferr" id="err-you"></p>
 
-<section id="done" hidden class="card cut16" style="max-width:640px;border-color:var(--green);margin-bottom:30px">
-  <p style="font-size:22px;font-weight:800;margin:0 0 8px" class="ok" data-i>You're registered ✓|تسجّلت ✓</p>
-  <p style="margin:0;color:rgba(255,254,236,.78)" data-i>Briefs, team matching and dates arrive by email. Bring your sharpest ideas.|البرييفات وتوزيع الفرق والتواريخ بتوصلك عالإيميل. جهّز أفكارك.</p>
+  <p class="step" data-i>2 · Solo or team?|٢ · لحالك ولا فريق؟</p>
+  <div class="choices" role="radiogroup" aria-label="Solo or team">
+    <label class="choice cut12"><input type="radio" name="mode" value="solo">
+      <b data-i>Solo|لحالي</b><span data-i>Just me — match me into a team of three.|أنا بس — حطّوني بفريق من ثلاثة.</span></label>
+    <label class="choice cut12"><input type="radio" name="mode" value="team">
+      <b data-i id="teamCardT">Team of three|فريق من ثلاثة</b><span data-i id="teamCardD">We have our trio — one of each role.|عنا فريقنا — واحد من كل دور.</span></label>
+  </div>
+  <p class="ferr" id="err-mode" style="margin-top:8px"></p>
+
+  <div id="dyn"></div>
+  <input id="hp" name="website" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+  <p id="formErr" class="err" aria-live="assertive" tabindex="-1" style="margin:0 0 12px;outline:none"></p>
+  <button id="submit" type="submit" class="btn ln cut12" hidden></button>
+  <p class="saved" id="savedNote" hidden data-i>Saved on this device — you can leave and come back.|محفوظ على هالجهاز — بتقدر تطلع وترجع.</p>
+</form>
+
+<section id="done" hidden class="card cut16" style="max-width:720px;border-color:var(--green);margin:20px 0 34px" tabindex="-1">
+  <p style="font-size:24px;font-weight:800;margin:0 0 8px" class="ok" data-i>You're in ✓|تسجّلت ✓</p>
+  <p id="doneText" style="margin:0 0 14px;color:rgba(255,254,236,.8)"></p>
+  <p class="mono" style="opacity:.65;margin:0 0 18px"><span data-i>REFERENCE|المرجع</span>: <b id="doneRef" dir="ltr"></b></p>
+  <div style="display:flex;gap:10px;flex-wrap:wrap">
+    <a id="shareLink" class="btn ln cut8" target="_blank" rel="noopener" style="font-size:12px" data-i>Share with a designer friend →|شارك مع صاحب مصمم ←</a>
+    <a id="waLink" class="btn ghost cut8" target="_blank" rel="noopener" style="font-size:12px" data-i>Questions? WhatsApp us|عندك سؤال؟ راسلنا واتساب</a>
+    <button id="again" class="btn ghost cut8" style="font-size:12px" data-i>Register someone else|سجّل حدا تاني</button>
+  </div>
 </section>
 <div class="strip" style="background:repeating-linear-gradient(90deg,var(--lilac) 0 16px,transparent 16px 40px)"></div>
-<footer><span data-i>© 2026 MeetPixils · Amman, Jordan|© ٢٠٢٦ ميت بكسلز · عمّان، الأردن</span> · <a href="/" style="color:var(--orange)" data-i>Event tickets|تذاكر الحدث</a></footer>
+<footer data-i>© 2026 MeetPixils · Amman, Jordan|© ٢٠٢٦ ميت بكسلز · عمّان، الأردن</footer>
 </main>
 <script>
-var AR=false;
-function t(){document.querySelectorAll('[data-i]').forEach(function(el){
-  if(!el.dataset.en){var p=el.innerHTML.split('|');el.dataset.en=p[0];el.dataset.ar=p[1]||p[0];}
-  el.innerHTML=AR?el.dataset.ar:el.dataset.en;});
-  document.documentElement.lang=AR?'ar':'en';document.body.dir=AR?'rtl':'ltr';
-  document.getElementById('lang').textContent=AR?'EN':'عربي';}
-document.getElementById('lang').onclick=function(){AR=!AR;try{localStorage.setItem('mp-lang',AR?'ar':'en')}catch(e){};t();};
-try{AR=localStorage.getItem('mp-lang')==='ar'}catch(e){}
-t();
-document.getElementById('team').onchange=function(){document.getElementById('teamNameF').hidden=this.value!=='team'};
-document.getElementById('submit').onclick=function(){
- var msg=document.getElementById('msg');msg.textContent='';
- var name=document.getElementById('name').value.trim(),email=document.getElementById('email').value.trim();
- if(!name||!/.+@.+\..+/.test(email)){msg.textContent=AR?'الاسم والإيميل مطلوبين':'Name and a valid email are required';return;}
- var b=this;b.disabled=true;
- fetch('/api/entries.php',{method:'POST',headers:{'Content-Type':'application/json'},
-  body:JSON.stringify({_kind:'battle-reg',name:name,email:email,
-   phone:document.getElementById('phone').value,discipline:document.getElementById('disc').value,
-   level:document.getElementById('level').value,portfolio:document.getElementById('portfolio').value,
-   team:document.getElementById('team').value,team_name:document.getElementById('teamName').value,
-   _hp:document.getElementById('hp').value})})
- .then(function(r){return r.json().then(function(j){return{r:r,j:j}})})
- .then(function(x){b.disabled=false;
-  if(!x.r.ok||!x.j.ok){msg.textContent='✗ '+(x.j.error||('HTTP '+x.r.status));return;}
-  document.getElementById('form').hidden=true;document.getElementById('done').hidden=false;
-  document.getElementById('done').scrollIntoView({behavior:'smooth'});})
- .catch(function(){b.disabled=false;msg.textContent=AR?'الشبكة ما ردّت — جرب كمان مرة':'Network error — try again';});};
+(function(){
+var WA = '962791319628';
+var ROLES = [
+  {k:'ux-research', c:'var(--ux)', en:'UX Researcher', ar:'باحث/ة تجربة', len:'UX/UI', lar:'UX/UI'},
+  {k:'product',     c:'var(--pd)', en:'Product Designer', ar:'مصمم/ة منتجات', len:'UX/UI', lar:'UX/UI'},
+  {k:'brand',       c:'var(--br)', en:'Brand Designer', ar:'مصمم/ة هوية', len:'Branding', lar:'الهوية'}
+];
+var AR = false, TRIED = false, SENDING = false;
+var S = {name:'', mode:'', team:'', members:[blank()]};
+function blank(){ return {name:'', email:'', phone:'', role:'', portfolio:''}; }
+function L(en, ar){ return AR ? ar : en; }
+function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+function roleOf(k){ for (var i = 0; i < ROLES.length; i++) if (ROLES[i].k === k) return ROLES[i]; return null; }
+function $(id){ return document.getElementById(id); }
+function arNum(n){ return String(n).replace(/\d/g, function(d){ return '٠١٢٣٤٥٦٧٨٩'[d]; }); }
+function mname(i){ return i === 0 ? L('You', 'إنت') : L('Member ' + (i + 1), 'العضو ' + arNum(i + 1)); }
+function fieldsDone(m, i){
+  var n = 0, of = i === 0 ? 4 : 5;
+  if (i > 0 && m.name.trim().length >= 2) n++;
+  if (okEmail(m.email)) n++; if (normPhone(m.phone)) n++; if (roleOf(m.role)) n++; if (okUrl(m.portfolio)) n++;
+  return [n, of];
+}
+
+/* ---------- static i18n ---------- */
+function i18n(){
+  document.querySelectorAll('[data-i]').forEach(function(el){
+    if (!el.dataset.en) { var p = el.innerHTML.split('|'); el.dataset.en = p[0]; el.dataset.ar = p[1] || p[0]; }
+    el.innerHTML = AR ? el.dataset.ar : el.dataset.en;
+  });
+  document.documentElement.lang = AR ? 'ar' : 'en';
+  document.body.dir = AR ? 'rtl' : 'ltr';
+  $('lang').textContent = AR ? 'EN' : 'عربي';
+}
+
+/* ---------- validation (mirrors api/battle-lib.php) ---------- */
+function okEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()); }
+function normPhone(v){
+  var d = v.replace(/[^\d+]/g, '');
+  if (d.indexOf('00') === 0) d = '+' + d.slice(2);
+  var g = d.replace(/^\+/, '');
+  if (!/^\d+$/.test(g)) return null;
+  if (d[0] !== '+') {
+    if (/^07\d{8}$/.test(g)) return '+962' + g.slice(1);
+    if (/^7\d{8}$/.test(g)) return '+962' + g;
+    if (/^9627\d{8}$/.test(g)) return '+' + g;
+    return null;
+  }
+  if (g.indexOf('962') === 0) return /^9627\d{8}$/.test(g) ? '+' + g : null;
+  return (g.length >= 8 && g.length <= 15) ? '+' + g : null;
+}
+function okUrl(v){
+  var u = v.trim(); if (!u || /\s/.test(u)) return false;
+  if (!/^https?:\/\//i.test(u)) u = 'https://' + u;
+  try { var h = new URL(u).hostname; return h.indexOf('.') > 0 && h[h.length - 1] !== '.'; } catch(e) { return false; }
+}
+function active(){ return S.mode === 'solo' ? S.members.slice(0, 1) : S.members; }
+function errorsFor(){
+  var E = {};
+  if (S.name.trim().length < 2) E.you = L('Add your name.', 'اكتب اسمك.');
+  if (!S.mode) E.mode = L('Choose solo or team.', 'اختار لحالك ولا فريق.');
+  if (S.mode === 'team' && S.team.trim().length < 2) E.team = L('Give your team a name.', 'سمّي فريقك.');
+  var emails = {}, phones = {};
+  active().forEach(function(m, i){
+    var p = 'm' + i + '-';
+    if (i > 0 && m.name.trim().length < 2) E[p + 'name'] = L('Add their name.', 'اكتب الاسم.');
+    if (!okEmail(m.email)) E[p + 'email'] = L('Enter a valid email.', 'اكتب إيميل صحيح.');
+    else if (emails[m.email.trim().toLowerCase()]) E[p + 'email'] = L('Each person needs their own email.', 'كل شخص بحاجة إيميل خاص فيه.');
+    else emails[m.email.trim().toLowerCase()] = 1;
+    var ph = normPhone(m.phone);
+    if (!ph) E[p + 'phone'] = L('Enter a WhatsApp number, e.g. 079 123 4567.', 'اكتب رقم واتساب، مثلاً ٠٧٩ ١٢٣ ٤٥٦٧.');
+    else if (phones[ph]) E[p + 'phone'] = L('Each person needs their own number.', 'كل شخص بحاجة رقم خاص فيه.');
+    else phones[ph] = 1;
+    if (!roleOf(m.role)) E[p + 'role'] = L('Pick a role.', 'اختار الدور.');
+    if (!okUrl(m.portfolio)) E[p + 'portfolio'] = L('A portfolio link is required to enter — Behance, Dribbble, a site, a Drive or Figma link all work.',
+                                                  'رابط البورتفوليو شرط للتسجيل — بيهانس، دريبل، موقع، رابط درايف أو فيجما، كلها بتمشي.');
+  });
+  return E;
+}
+function dupRoles(){
+  if (S.mode !== 'team') return [];
+  var count = {}; S.members.forEach(function(m){ if (m.role) count[m.role] = (count[m.role] || 0) + 1; });
+  return Object.keys(count).filter(function(k){ return count[k] > 1; });
+}
+
+/* ---------- dynamic section ---------- */
+function memberHTML(m, i){
+  var n = active().length, isYou = i === 0;
+  var title = S.mode === 'solo' ? '' : (isYou ? L('Member 1 · you', 'العضو ١ · إنت') : L('Member ', 'العضو ') + (AR ? arNum(i + 1) : (i + 1)));
+  var h = '<fieldset class="mem cut12" data-m="' + i + '">';
+  if (title) {
+    var pr = fieldsDone(m, i);
+    var ask = L("Hey! I'm registering our team for MeetBattle — can you send me your email, WhatsApp number and portfolio link? ", 'هلا! عم سجّل فريقنا بميت باتل — ابعتلي إيميلك ورقم واتسابك ورابط البورتفوليو تبعك. ') + location.origin + '/battle/';
+    h += '<legend><span>' + esc(title) + '</span> <span class="prog" id="prog-' + i + '">' + (AR ? arNum(pr[0]) + '/' + arNum(pr[1]) : pr[0] + '/' + pr[1]) + '</span>' +
+         (i > 0 ? '<a class="ask" href="https://wa.me/?text=' + encodeURIComponent(ask) + '" target="_blank" rel="noopener">' + L('Ask them on WhatsApp ↗', 'اطلب منه عالواتساب ↗') + '</a>' : '') +
+         (S.mode === 'friends' && i > 0 && n > 2 ? '<button type="button" class="rm" data-rm="' + i + '">' + L('Remove', 'إزالة') + '</button>' : '') + '</legend>';
+  }
+  if (!isYou) h += fld(i, 'name', L('FULL NAME', 'الاسم الكامل'), 'text', m.name, '', '');
+  h += '<div class="two">' +
+       fld(i, 'email', L('EMAIL', 'الإيميل'), 'email', m.email, 'name@email.com', isYou ? 'email' : 'off') +
+       fld(i, 'phone', L('WHATSAPP NUMBER', 'رقم الواتساب'), 'tel', m.phone, '079 123 4567', isYou ? 'tel' : 'off') + '</div>';
+  h += '<fieldset style="margin-bottom:14px" aria-describedby="err-m' + i + '-role"><legend class="mono" style="opacity:.6;font-size:10.5px;margin-bottom:6px">' + L('ROLE', 'الدور') + '</legend><div class="roles">';
+  ROLES.forEach(function(r){
+    h += '<label class="rp" style="--c:' + r.c + '"><input type="radio" name="role-' + i + '" value="' + r.k + '"' + (m.role === r.k ? ' checked' : '') + ' data-m="' + i + '" data-k="role">' +
+         '<span class="cut8"><i class="sq" style="background:' + r.c + ';margin:0"></i>' + esc(L(r.en, r.ar)) + ' <small>' + esc(L(r.len, r.lar)) + '</small></span></label>';
+  });
+  h += '</div><p class="ferr" id="err-m' + i + '-role" style="margin:6px 0 0"></p><p class="clash" id="clash-m' + i + '"></p></fieldset>';
+  h += fld(i, 'portfolio', L('PORTFOLIO LINK — REQUIRED', 'رابط البورتفوليو — إجباري'), 'url', m.portfolio, 'behance.net/yourname', 'url');
+  return h + '</fieldset>';
+}
+function fld(i, k, label, type, val, ph, ac){
+  var id = 'm' + i + '-' + k, dir = (type === 'email' || type === 'tel' || type === 'url') ? ' dir="ltr"' : '';
+  return '<label class="field"><span>' + label + '</span><input id="' + id + '" type="' + type + '" value="' + esc(val) + '" placeholder="' + esc(ph) + '"' + dir +
+         (ac ? ' autocomplete="' + ac + '"' : '') + (type === 'tel' ? ' inputmode="tel"' : '') + ' data-m="' + i + '" data-k="' + k + '" aria-describedby="err-' + id + '"></label>' +
+         '<p class="ferr" id="err-' + id + '"></p>';
+}
+function teamCard(){
+  var t = $('teamCardT'), d = $('teamCardD'); if (!t.dataset.en) return;
+  if (S.mode === 'friends') { t.textContent = L('Friends together', 'أصحاب مع بعض'); d.textContent = L("We'll mix you into different teams.", 'رح نوزّعكم على فرق مختلفة.'); }
+  else { t.innerHTML = AR ? t.dataset.ar : t.dataset.en; d.innerHTML = AR ? d.dataset.ar : d.dataset.en; }
+}
+function progress(){
+  S.members.forEach(function(m, i){ var el = $('prog-' + i); if (!el) return; var pr = fieldsDone(m, i);
+    el.textContent = AR ? arNum(pr[0]) + '/' + arNum(pr[1]) : pr[0] + '/' + pr[1];
+    el.style.color = pr[0] === pr[1] ? 'var(--green)' : ''; el.style.opacity = pr[0] === pr[1] ? '1' : ''; });
+}
+function render(){
+  var d = $('dyn'), h = '';
+  teamCard();
+  if (!S.mode) { d.innerHTML = ''; $('submit').hidden = true; $('savedNote').hidden = true; return; }
+  if (S.mode === 'solo') {
+    h += '<p class="step">' + L('3 · Your details', '٣ · معلوماتك') + '</p>' + memberHTML(S.members[0], 0);
+  } else if (S.mode === 'team') {
+    h += '<p class="step">' + L('3 · Your team', '٣ · فريقك') + '</p>';
+    h += '<p class="prep">' + L('Have ready for each of the three: email, WhatsApp number, portfolio link.', 'جهّز لكل واحد من الثلاثة: إيميل، رقم واتساب، رابط بورتفوليو.') + '</p>';
+    h += '<label class="field" style="margin-bottom:6px"><span>' + L('TEAM NAME', 'اسم الفريق') + '</span><input id="teamName" value="' + esc(S.team) + '" aria-describedby="err-team"></label><p class="ferr" id="err-team"></p>';
+    h += '<div class="meter" id="meter" aria-live="polite"></div><div id="conflict" aria-live="polite"></div>';
+    S.members.forEach(function(m, i){ h += memberHTML(m, i); });
+  } else {
+    h += '<p class="step">' + L('3 · You and your friends', '٣ · إنت وأصحابك') + '</p>';
+    h += '<div class="banner cut12"><p>' + L("You're registering together as friends — we'll place each of you in a different team, so roles can repeat.",
+             'عم تسجّلوا سوا كأصحاب — رح نوزّع كل واحد فيكم على فريق مختلف، فالأدوار ممكن تتكرر.') +
+         '</p><button type="button" class="link" id="undoFriends">' + L("Undo — we'll fix our roles", 'رجوع — رح نعدّل الأدوار') + '</button></div>';
+    h += '<label class="field"><span>' + L('GROUP NICKNAME — OPTIONAL', 'اسم المجموعة — اختياري') + '</span><input id="teamName" value="' + esc(S.team) + '"></label>';
+    S.members.forEach(function(m, i){ h += memberHTML(m, i); });
+    if (S.members.length < 6) h += '<button type="button" class="add" id="addFriend">' + L('+ Add a friend', '+ ضيف صاحب') + '</button>';
+  }
+  h += '<p class="elig"><i class="sq" style="background:var(--lilac);margin-top:5px"></i><span>' +
+       L('Everyone needs a portfolio link — no link, no entry. Briefs, team placements and dates are sent by email and WhatsApp.',
+         'كل شخص لازم يحط رابط بورتفوليو — بدونه ما في تسجيل. البرييفات وتوزيع الفرق والمواعيد بتوصلكم عالإيميل والواتساب.') + '</span></p>';
+  d.innerHTML = h;
+  var sb = $('submit'); sb.hidden = false; $('savedNote').hidden = false;
+  sb.innerHTML = (S.mode === 'solo' ? L('Register', 'سجّلني') : S.mode === 'team' ? L('Register our team', 'سجّل فريقنا') : L('Register us', 'سجّلنا')) + ' <span aria-hidden="true">' + L('→', '←') + '</span>';
+  composition();
+  if (TRIED) showErrors(errorsFor(), false);
+}
+function composition(){
+  var meter = $('meter'), box = $('conflict');
+  document.querySelectorAll('.clash').forEach(function(p){ p.textContent = ''; });
+  if (!meter) return;
+  var dups = dupRoles();
+  meter.innerHTML = ROLES.map(function(r){
+    var n = S.members.filter(function(m){ return m.role === r.k; }).length;
+    var cls = n === 1 ? 'ok' : n > 1 ? 'dup' : '';
+    var state = n === 1 ? L('✓ filled', '✓ موجود') : n > 1 ? L('× ' + n + ' picked', '× ' + n + ' اختاروه') : L('needed', 'مطلوب');
+    return '<div class="slot cut8 ' + cls + '"><b><i class="sq" style="background:' + r.c + '"></i>' + esc(L(r.en, r.ar)) + '</b><span>' + state + '</span></div>';
+  }).join('');
+  if (!dups.length) { box.innerHTML = ''; return; }
+  var role = dups[0], idx = [];
+  S.members.forEach(function(m, i){ if (m.role === role) idx.push(i); });
+  dups.forEach(function(r){
+    var first = -1;
+    S.members.forEach(function(m, i){
+      if (m.role !== r) return;
+      if (first < 0) { first = i; return; }
+      var p = $('clash-m' + i);
+      if (p) p.textContent = L(mname(first) + ' already picked ' + roleOf(r).en + ' — pick a different role.', mname(first) + ' اختار ' + roleOf(r).ar + ' — اختار دور تاني.');
+    });
+  });
+  var missing = ROLES.filter(function(r){ return !S.members.some(function(m){ return m.role === r.k; }); }).map(function(r){ return L(r.en, r.ar); });
+  var uxOnly = S.members.every(function(m){ var r = roleOf(m.role); return r && r.len === 'UX/UI'; });
+  var brOnly = S.members.every(function(m){ return m.role === 'brand'; });
+  var why = idx.length === 3 ? L('All three of you picked ' + roleOf(role).en + '.', 'الثلاثة اخترتوا ' + roleOf(role).ar + '.')
+          : L(idx.map(mname).join(' and ') + ' both picked ' + roleOf(role).en + '.', idx.map(mname).join(' و ') + ' اختاروا ' + roleOf(role).ar + '.');
+  if (uxOnly) why += ' ' + L('Teams can\'t be all UX/UI.', 'ما في فرق كلها UX/UI.');
+  if (brOnly) why += ' ' + L('Teams can\'t be all Branding.', 'ما في فرق كلها هوية.');
+  if (missing.length) why += ' ' + L('Still needed: ' + missing.join(', ') + '.', 'لسا ناقص: ' + missing.join('، ') + '.');
+  var last = idx[idx.length - 1];
+  box.innerHTML = '<div class="note cut12" id="noteBox" tabindex="-1" style="outline:none"><p><b>' + L('You must be different roles — one of each.', 'لازم تكونوا أدوار مختلفة — واحد من كل دور.') + '</b> ' + esc(why) + '</p>' +
+    '<div class="acts"><button type="button" class="btn ghost cut8" data-fix="' + last + '" style="font-size:12px">' + L('Change ' + mname(last) + '\'s role', 'غيّر دور ' + mname(last)) + '</button>' +
+    '<button type="button" class="btn ghost cut8" id="toFriends" style="font-size:12px">' + L('Register my friends — but mix us into different teams', 'سجّل أصحابي — بس وزّعونا على فرق مختلفة') + '</button></div></div>';
+}
+
+/* ---------- errors ---------- */
+function showErrors(E, focus){
+  document.querySelectorAll('.ferr').forEach(function(p){ p.textContent = ''; });
+  document.querySelectorAll('[aria-invalid]').forEach(function(el){ el.removeAttribute('aria-invalid'); });
+  var first = null;
+  Object.keys(E).forEach(function(k){
+    var p = $('err-' + k); if (p) p.textContent = E[k];
+    var inp = k === 'you' ? $('you') : k === 'team' ? $('teamName') : k === 'mode' ? document.querySelector('input[name=mode]') : $(k) || document.querySelector('input[name="role-' + k.replace(/^m(\d+)-role$/, '$1') + '"]');
+    if (inp && inp.type !== 'radio') inp.setAttribute('aria-invalid', 'true');
+    if (!first && inp) first = inp;
+  });
+  if (focus && first) { first.focus({preventScroll: true}); first.scrollIntoView({behavior: 'smooth', block: 'center'}); }
+}
+
+/* ---------- draft persistence ---------- */
+var saveT;
+function save(){ clearTimeout(saveT); saveT = setTimeout(function(){ try { localStorage.setItem('mb-draft', JSON.stringify(S)); } catch(e){} }, 300); }
+try { var dr = JSON.parse(localStorage.getItem('mb-draft') || 'null'); if (dr && dr.members && dr.members.length) S = dr; } catch(e){}
+
+/* ---------- events ---------- */
+$('you').value = S.name;
+if (S.mode) { var mr = document.querySelector('input[name=mode][value="' + (S.mode === 'friends' ? 'team' : S.mode) + '"]'); if (mr) mr.checked = true; }
+$('you').addEventListener('input', function(){ S.name = this.value; save(); if (TRIED) showErrors(errorsFor(), false); });
+document.querySelectorAll('input[name=mode]').forEach(function(r){
+  r.addEventListener('change', function(){
+    S.mode = this.value;
+    if (S.mode === 'team') { while (S.members.length < 3) S.members.push(blank()); if (S.members.length > 3) S.members = S.members.slice(0, 3); }
+    save(); render();
+  });
+});
+var form = $('form');
+form.addEventListener('input', function(e){
+  var t = e.target;
+  if (t.id === 'teamName') { S.team = t.value; save(); return; }
+  var i = t.dataset.m, k = t.dataset.k;
+  if (i == null || !k) return;
+  S.members[+i][k] = t.value; save(); progress();
+  if (k === 'role') composition();
+  if (TRIED) showErrors(errorsFor(), false);
+});
+form.addEventListener('change', function(e){ if (e.target.dataset && e.target.dataset.k === 'role') { S.members[+e.target.dataset.m].role = e.target.value; save(); progress(); composition(); if (TRIED) showErrors(errorsFor(), false); } });
+form.addEventListener('focusout', function(e){
+  var t = e.target, k = t.dataset && t.dataset.k;
+  if (!k || !t.value || TRIED) return;
+  var bad = (k === 'email' && !okEmail(t.value)) || (k === 'phone' && !normPhone(t.value)) || (k === 'portfolio' && !okUrl(t.value));
+  var E = errorsFor(), key = 'm' + t.dataset.m + '-' + k, p = $('err-' + key);
+  if (p) p.textContent = bad ? (E[key] || '') : '';
+  if (bad) t.setAttribute('aria-invalid', 'true'); else t.removeAttribute('aria-invalid');
+});
+form.addEventListener('click', function(e){
+  var t = e.target.closest('button'); if (!t) return;
+  if (t.dataset.fix != null) {
+    var rr = document.querySelector('input[name="role-' + t.dataset.fix + '"]:checked') || document.querySelector('input[name="role-' + t.dataset.fix + '"]');
+    if (rr) { rr.focus({preventScroll: true}); rr.closest('fieldset').scrollIntoView({behavior: 'smooth', block: 'center'}); }
+    return;
+  }
+  if (t.id === 'toFriends') { S.mode = 'friends'; save(); render(); $('dyn').scrollIntoView({behavior: 'smooth', block: 'start'}); }
+  else if (t.id === 'undoFriends') {
+    if (S.members.length > 3 && !confirm(L('A team is three people — keep the first three?', 'الفريق ثلاثة أشخاص — نخلّي أول ثلاثة؟'))) return;
+    S.mode = 'team'; S.members = S.members.slice(0, 3); while (S.members.length < 3) S.members.push(blank()); save(); render();
+  }
+  else if (t.id === 'addFriend') { S.members.push(blank()); save(); render(); var nm = $('m' + (S.members.length - 1) + '-name'); if (nm) nm.focus(); }
+  else if (t.dataset.rm) { S.members.splice(+t.dataset.rm, 1); save(); render(); }
+});
+form.addEventListener('submit', function(e){
+  e.preventDefault();
+  if (SENDING) return;
+  TRIED = true;
+  $('formErr').textContent = '';
+  var E = errorsFor();
+  var nE = Object.keys(E).length;
+  if (nE) { $('formErr').textContent = nE === 1 ? L('1 field needs fixing.', 'في خانة بحاجة تعديل.') : L(nE + ' fields need fixing.', arNum(nE) + ' خانات بحاجة تعديل.'); showErrors(E, true); return; }
+  if (dupRoles().length) {
+    $('formErr').textContent = L('Roles must be different — see the note under “Your team”.', 'لازم تكون الأدوار مختلفة — شوف الملاحظة تحت «فريقك».');
+    var nb = $('noteBox'); if (nb) { nb.focus({preventScroll: true}); nb.scrollIntoView({behavior: 'smooth', block: 'center'}); }
+    return;
+  }
+  var members = active().map(function(m, i){
+    return {name: i === 0 ? S.name.trim() : m.name.trim(), email: m.email.trim(), phone: m.phone, role: m.role, portfolio: m.portfolio.trim()};
+  });
+  SENDING = true; var b = $('submit'); b.disabled = true; var label = b.innerHTML; b.textContent = L('Sending…', 'لحظة…');
+  fetch('/api/battle-register.php', {method: 'POST', headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({mode: S.mode, team_name: S.team.trim(), members: members, _hp: $('hp').value})})
+  .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(j){ return {r: r, j: j}; }); })
+  .then(function(x){
+    SENDING = false; b.disabled = false; b.innerHTML = label;
+    if (x.r.ok && x.j.ok) return success(x.j);
+    var f = x.j.field || '';
+    if (f === 'roles') { composition(); var nb2 = $('noteBox'); if (nb2) { nb2.focus({preventScroll: true}); nb2.scrollIntoView({behavior: 'smooth', block: 'center'}); } return; }
+    var m = /^members\.(\d+)\.(\w+)$/.exec(f), key = m ? 'm' + m[1] + '-' + m[2] : f === 'team_name' ? 'team' : '';
+    var serverMsg = x.j.error || L('Something went wrong (HTTP ' + x.r.status + ').', 'صار خطأ (HTTP ' + x.r.status + ').');
+    if (key && $('err-' + key)) { var E2 = {}; E2[key] = serverMsg; showErrors(E2, true); }
+    else $('formErr').innerHTML = esc(serverMsg) + (f === 'duplicate' ? ' <a href="https://wa.me/' + WA + '" target="_blank" rel="noopener" style="color:var(--lilac)">WhatsApp</a>' : '');
+  })
+  .catch(function(){ SENDING = false; b.disabled = false; b.innerHTML = label; $('formErr').textContent = L("Couldn't reach the server — check your connection and try again.", 'ما قدرنا نوصل للسيرفر — تأكد من الإنترنت وجرّب كمان مرة.'); });
+});
+function success(j){
+  var mode = S.mode, team = S.team.trim();
+  $('doneRef').textContent = j.ref;
+  $('doneText').textContent = mode === 'solo'
+    ? L("We'll place you in a team of three and send the brief by email and WhatsApp.", 'رح نحطّك بفريق من ثلاثة ونبعتلك البرييف عالإيميل والواتساب.')
+    : mode === 'team'
+    ? L('Team ' + team + ' is registered. Briefs and dates go to all three of you by email and WhatsApp.', 'فريق ' + team + ' تسجّل. البرييفات والمواعيد بتوصل للثلاثة عالإيميل والواتساب.')
+    : L("You're all registered. We'll place each of you in a different team and let you know by email and WhatsApp.", 'تسجّلتوا كلكم. رح نوزّع كل واحد على فريق مختلف ونخبركم عالإيميل والواتساب.');
+  var msg = 'Hi MeetBattle — I just registered (ref ' + j.ref + (team ? ', ' + team : '') + ').';
+  $('waLink').href = 'https://wa.me/' + WA + '?text=' + encodeURIComponent(msg);
+  $('shareLink').href = 'https://wa.me/?text=' + encodeURIComponent(L('I just registered for MeetBattle — teams of three, portfolio link required. Join: ', 'سجّلت بميت باتل — فرق من ثلاثة، ورابط البورتفوليو إجباري. سجّل هون: ') + location.origin + '/battle/');
+  try { localStorage.removeItem('mb-draft'); } catch(e){}
+  $('form').hidden = true; $('done').hidden = false; $('formErr').textContent = ''; $('done').focus({preventScroll: true});
+  $('done').scrollIntoView({behavior: 'smooth', block: 'start'});
+}
+$('again').addEventListener('click', function(){
+  S = {name: '', mode: '', team: '', members: [blank()]}; TRIED = false;
+  $('you').value = ''; document.querySelectorAll('input[name=mode]').forEach(function(r){ r.checked = false; });
+  render(); showErrors({}, false); $('formErr').textContent = ''; $('done').hidden = true; $('form').hidden = false; $('you').focus();
+});
+$('lang').addEventListener('click', function(){ AR = !AR; try { localStorage.setItem('mp-lang', AR ? 'ar' : 'en'); } catch(e){} i18n(); render(); });
+try { AR = localStorage.getItem('mp-lang') === 'ar'; } catch(e){}
+i18n(); render();
+})();
 </script></body></html>
