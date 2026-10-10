@@ -46,6 +46,9 @@ select.st{font-family:'IBM Plex Mono',monospace;font-size:11px;padding:6px;backg
 .mini{font-family:'IBM Plex Mono',monospace;font-size:11px;padding:7px 12px;background:rgba(255,254,236,.07);color:var(--cream);border:1px solid rgba(255,254,236,.26);cursor:pointer}
 .chip{cursor:pointer}
 .chip[aria-pressed=true]{background:rgba(255,254,236,.18)}
+.ok-btn{background:rgba(95,211,154,.18);border-color:var(--green);color:var(--green);font-weight:700;min-height:36px}
+.no-btn{border-color:var(--o2);color:var(--o2);min-height:36px}
+tr.pend td{background:rgba(239,82,41,.05)}
 </style></head><body>
 <main class="wrap" style="max-width:1100px">
 <header class="top"><span class="mono" style="color:var(--orange)">MEETPIXILS · OPS</span>
@@ -73,6 +76,7 @@ select.st{font-family:'IBM Plex Mono',monospace;font-size:11px;padding:6px;backg
     <button id="backup" class="mini" title="super only">⤓ full backup</button>
     <span id="count" class="mono" style="opacity:.5"></span>
   </div>
+  <p id="tkSum" class="mono" style="margin:0 0 12px;opacity:.8"></p>
   <div style="overflow-x:auto"><table><thead><tr>
     <th>KIND</th><th>WHO</th><th>DETAIL</th><th>PROOF</th><th>STATUS</th><th>WHEN</th>
   </tr></thead><tbody id="rows"></tbody></table></div>
@@ -80,7 +84,7 @@ select.st{font-family:'IBM Plex Mono',monospace;font-size:11px;padding:6px;backg
 </section>
 </main>
 <script>
-var PW='',ROLE='',ROWS=[],KIND='all',STS=['receipt-review','loyalty-review','approved-pay-now','paid','rejected'];
+var PW='',ROLE='',ROWS=[],KIND='all',STS=['pending','approved','rejected','receipt-review','loyalty-review','approved-pay-now','paid'];
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function load(){fetch('/api/entries.php',{headers:{'X-MP-Pass':PW},cache:'no-store'})
  .then(function(r){if(!r.ok)throw r.status;return r.json()})
@@ -94,13 +98,13 @@ function shown(){var q=document.getElementById('q').value.toLowerCase();
 function render(){var tb=document.getElementById('rows');tb.innerHTML='';
  var list=shown();document.getElementById('count').textContent=list.length+'/'+ROWS.length;
  list.slice().reverse().forEach(function(r){
-  var tr=document.createElement('tr');
+  var tr=document.createElement('tr');if(r.status==='pending')tr.className='pend';
   var MODE={solo:'SOLO',team:'TEAM',friends:'FRIENDS · MIX'};
   var det=(r._kind==='battle-reg'&&r.members)
     ?'<b style="color:var(--lilac)">'+(MODE[r.mode]||esc(r.mode))+'</b>'+(r.team_name?' · '+esc(r.team_name):'')
       +(r.wa==='failed'?' <span style="color:var(--o2)" title="WhatsApp alert failed — follow up manually">· WA ✗</span>':r.wa==='sent'?' <span style="color:var(--green)">· WA ✓</span>':'')
       +'<br>'+r.members.map(function(m){return esc(m.name)+' — '+esc(m.role_label)+' · <span dir="ltr">'+esc(m.phone)+'</span> · <a href="'+esc(m.portfolio)+'" target="_blank" rel="noopener" style="color:var(--cyan)">portfolio</a>'}).join('<br>')
-    :r.pass?esc(r.pass)+' · '+esc(r.price)+(r.loyalty&&r.loyalty!=='no'?' · loyalty':'')
+    :r.pass?esc(r.pass)+' · '+esc(r.price)+(r.earlybird?' · <span style="color:var(--orange)">EARLYBIRD</span>':'')+(r.loyalty&&r.loyalty!=='no'?' · loyalty':'')+(r.phone?'<br><span dir="ltr" style="opacity:.7">'+esc(r.phone)+'</span>':'')+(r.token?' · <a href="/ticket/?t='+esc(r.token)+'" target="_blank" rel="noopener" style="color:var(--cyan)">ticket ↗</a>':'')
     :r.amount?esc(r.initiative||'')+' · '+esc(r.amount)
     :r.team?esc(r.discipline||'')+' · '+esc(r.level||'')+' · '+esc(r.team)+(r.team_name?' ('+esc(r.team_name)+')':'')
     :r.total?esc(r.judge||'')+' scored '+esc(r.team||'')+' — '+esc(r.total)+'/100':'';
@@ -108,7 +112,8 @@ function render(){var tb=document.getElementById('rows');tb.innerHTML='';
   if(r.receipt)proof+='<button class="mini" data-f="'+esc(r.receipt)+'">receipt</button> ';
   if(r.stamp)proof+='<button class="mini" data-f="'+esc(r.stamp)+'">stamp</button>';
   var st='';
-  if(r.order&&r.status){st='<select class="st" data-o="'+esc(r.order)+'">'+
+  if(r.order&&r.status==='pending'){st+='<div style="display:flex;gap:6px;margin-bottom:6px"><button class="mini ok-btn" data-dec="approved" data-o="'+esc(r.order)+'">✓ Approve</button><button class="mini no-btn" data-dec="rejected" data-o="'+esc(r.order)+'">✗ Reject</button></div>';}
+  if(r.order&&r.status){st+='<select class="st" data-o="'+esc(r.order)+'">'+
    STS.map(function(x){return '<option'+(x===r.status?' selected':'')+'>'+x+'</option>'}).join('')+
    (STS.indexOf(r.status)<0?'<option selected>'+esc(r.status)+'</option>':'')+'</select>';}
   tr.innerHTML='<td class="mono" style="color:var(--orange)">'+esc(r._kind)+'</td>'+
@@ -122,6 +127,19 @@ function render(){var tb=document.getElementById('rows');tb.innerHTML='';
   .then(function(r){if(!r.ok)throw 0;return r.blob()})
   .then(function(bl){window.open(URL.createObjectURL(bl),'_blank','noopener')})
   .catch(function(){document.getElementById('pMsg').textContent='image failed'});};});
+ tb.querySelectorAll('[data-dec]').forEach(function(b){b.onclick=function(){
+  var r=ROWS.filter(function(x){return x.order===b.dataset.o})[0]||{};
+  var yes=b.dataset.dec==='approved';
+  if(!confirm((yes?'APPROVE ':'REJECT ')+(r.name||'')+' — '+(r.pass||'')+' '+(r.price||'')+'?\n\n'+(yes?'Only approve if the CliQ transfer arrived. The buyer is emailed and their QR turns into a valid ticket.':'The buyer is emailed and their QR shows "not verified".')))return;
+  b.disabled=true;
+  fetch('/api/entries.php',{method:'POST',headers:{'Content-Type':'application/json'},
+   body:JSON.stringify({_action:'set-status',password:PW,order:b.dataset.o,status:b.dataset.dec})})
+  .then(function(x){if(!x.ok)throw x.status;r.status=b.dataset.dec;render();})
+  .catch(function(e){b.disabled=false;document.getElementById('pMsg').textContent='decision failed ('+e+') — moderator/super only'});};});
+ var tk=ROWS.filter(function(x){return x._kind==='ticket'});
+ var c=function(st){return tk.filter(function(x){return x.status===st}).length};
+ var rev=tk.filter(function(x){return x.status==='approved'||x.status==='paid'}).reduce(function(a,x){return a+(parseInt(x.price,10)||0)},0);
+ document.getElementById('tkSum').innerHTML=tk.length?'TICKETS · <span style="color:var(--o2)">'+c('pending')+' pending</span> · <span style="color:var(--green)">'+(c('approved')+c('paid'))+' approved</span> · '+c('rejected')+' rejected · '+rev+' JOD confirmed':'';
  tb.querySelectorAll('select.st').forEach(function(s){s.onchange=function(){
   fetch('/api/entries.php',{method:'POST',headers:{'Content-Type':'application/json'},
    body:JSON.stringify({_action:'set-status',password:PW,order:s.dataset.o,status:s.value})})

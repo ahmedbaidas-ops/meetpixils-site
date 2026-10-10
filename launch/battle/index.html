@@ -200,7 +200,7 @@ function i18n(){
 /* ---------- validation (mirrors api/battle-lib.php) ---------- */
 function okEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()); }
 function normPhone(v){
-  var d = v.replace(/[^\d+]/g, '');
+  var d = String(v).replace(/[\u0660-\u0669]/g, function(c){ return c.charCodeAt(0) - 0x660; }).replace(/[\u06F0-\u06F9]/g, function(c){ return c.charCodeAt(0) - 0x6F0; }).replace(/[^\d+]/g, '');
   if (d.indexOf('00') === 0) d = '+' + d.slice(2);
   var g = d.replace(/^\+/, '');
   if (!/^\d+$/.test(g)) return null;

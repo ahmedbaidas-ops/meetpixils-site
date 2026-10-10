@@ -7,7 +7,7 @@
  */
 require __DIR__ . '/config.php';
 require __DIR__ . '/battle-lib.php';
-@include __DIR__ . '/whatsapp-config.php';
+require __DIR__ . '/wa-lib.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') mp_json_out(405, ['error' => 'method not allowed']);
 $body = mp_read_body(24576);
@@ -39,29 +39,7 @@ fflush($fp); flock($fp, LOCK_UN); fclose($fp);
 
 // ---- alerts: never block or fail the registration ----
 $text = mp_b_alert($entry, $ref);
-$wa = 'off';
-if (defined('MP_WA_APIKEY') && MP_WA_APIKEY !== '' && defined('MP_WA_PHONE')) {
-  $url = 'https://api.callmebot.com/whatsapp.php?phone=' . rawurlencode(MP_WA_PHONE)
-       . '&text=' . rawurlencode($text) . '&apikey=' . rawurlencode(MP_WA_APIKEY);
-  // CallMeBot answers 200 + "Message queued…" on success; failures come back as
-  // e.g. 203 "APIKey is invalid", so require both the status and positive wording.
-  $code = 0; $res = false;
-  if (function_exists('curl_init')) {
-    $ch = curl_init($url);
-    curl_setopt_array($ch, [CURLOPT_RETURNTRANSFER => true, CURLOPT_TIMEOUT => 12, CURLOPT_CONNECTTIMEOUT => 6]);
-    $res = curl_exec($ch);
-    $code = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
-  } else {
-    $res = @file_get_contents($url, false, stream_context_create(['http' => ['timeout' => 12, 'ignore_errors' => true]]));
-    if (isset($http_response_header[0]) && preg_match('#\s(\d{3})\s#', $http_response_header[0], $mm)) $code = (int)$mm[1];
-  }
-  $body = strtolower((string)$res);
-  $ok = $res !== false && $code === 200
-     && (str_contains($body, 'queued') || str_contains($body, 'sent'))
-     && !str_contains($body, 'invalid') && !str_contains($body, 'error');
-  $wa = $ok ? 'sent' : 'failed';
-}
+$wa = mp_wa_send($text);
 if (defined('MP_NOTIFY_EMAIL') && MP_NOTIFY_EMAIL !== '') {
   @mail(MP_NOTIFY_EMAIL, 'MeetBattle registration ' . $ref, $text, "From: no-reply@meetpixils.com\r\nContent-Type: text/plain; charset=utf-8");
 }

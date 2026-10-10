@@ -35,8 +35,17 @@ function mp_b_url(string $raw): ?string {
 }
 
 /** Phone → +E.164. Jordanian forms 07…, 7…, 9627…, 009627…, +9627… all accepted. */
+function mp_b_ascii_digits(string $s): string {
+  static $map = null;
+  if ($map === null) { $map = [];
+    foreach (['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'] as $i => $c) $map[$c] = (string)$i;   // Arabic-Indic
+    foreach (['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'] as $i => $c) $map[$c] = (string)$i;   // Persian
+  }
+  return strtr($s, $map);
+}
+
 function mp_b_phone(string $raw): ?string {
-  $d = preg_replace('/[^\d+]/', '', $raw) ?? '';
+  $d = preg_replace('/[^\d+]/', '', mp_b_ascii_digits($raw)) ?? '';
   if (str_starts_with($d, '00')) $d = '+' . substr($d, 2);
   $digits = ltrim($d, '+');
   if (!ctype_digit($digits)) return null;

@@ -39,11 +39,15 @@ if (($body['_action'] ?? '') === 'set-status') {
   mp_check_admin($body['password'] ?? null, ['super', 'moderator']);
   $order = (string)($body['order'] ?? '');
   $status = (string)($body['status'] ?? '');
-  $allowed = ['receipt-review', 'loyalty-review', 'approved-pay-now', 'paid', 'rejected'];
+  $allowed = ['pending', 'approved', 'receipt-review', 'loyalty-review', 'approved-pay-now', 'paid', 'rejected'];
   if ($order === '' || !in_array($status, $allowed, true)) mp_json_out(400, ['error' => 'bad order/status']);
   $target = null;
   mp_entries_update(function ($list) use ($order, $status, &$target) {
-    foreach ($list as &$e) if (($e['order'] ?? '') === $order) { $e['status'] = $status; $target = $e; }
+    foreach ($list as &$e) if (($e['order'] ?? '') === $order) {
+      $e['status'] = $status;
+      if (in_array($status, ['approved', 'rejected', 'paid'], true)) $e['decided_at'] = gmdate('c'); else unset($e['decided_at']);
+      $target = $e;
+    }
     return $list;
   });
   // keep the "we'll email you" promise automatically
@@ -52,7 +56,13 @@ if (($body['_action'] ?? '') === 'set-status') {
     $cliq = '0791319628';
     $cf = MP_DATA_DIR . '/content.json';
     if (is_file($cf)) { $c = json_decode((string)file_get_contents($cf), true); if (!empty($c['settings']['cliq'])) $cliq = (string)$c['settings']['cliq']; }
+    $link = !empty($target['token']) ? (defined('MP_SITE_URL') ? MP_SITE_URL : 'https://meetpixils.com') . '/ticket/?t=' . $target['token'] : '';
     switch ($status) {
+      case 'approved':
+        mp_mail_buyer($target['email'], "MeetPixils — your ticket is approved ✓ ($order)",
+          "Payment confirmed — you're in!\n" . ($target['pass'] ?? '') . " · $price · ref $order\nYour ticket (show this QR at the door): $link",
+          "الدفع تأكد — إنت جوّا!\n" . ($target['pass'] ?? '') . " · $price · المرجع $order\nتذكرتك (فرجينا الكود عالباب): $link");
+        break;
       case 'approved-pay-now':
         mp_mail_buyer($target['email'], "MeetPixils — loyalty approved, one step left ($order)",
           "Good news — your loyalty discount is approved!\nSend $price via CliQ to $cliq, then reply to this email with the transfer receipt. Your seat is confirmed the moment we match it.",
@@ -65,7 +75,7 @@ if (($body['_action'] ?? '') === 'set-status') {
         break;
       case 'rejected':
         mp_mail_buyer($target['email'], "MeetPixils — we couldn't verify your ticket ($order)",
-          "We couldn't verify this submission (order $order). If you believe this is a mistake, just reply to this email and we'll sort it out together.",
+          "We couldn't verify this submission (order $order). If you believe this is a mistake, just reply to this email and we'll sort it out together." . ($link ? "\nStatus: $link" : ''),
           "ما قدرنا نأكد طلبك ($order). إذا بتعتقد صار خطأ، رد على هالإيميل ومنحلها سوا.");
         break;
     }

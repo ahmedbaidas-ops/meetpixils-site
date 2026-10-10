@@ -579,8 +579,8 @@ function Overview({ pw, store, goto, role }: { pw: string; store: Store; goto: (
   }, [pw]);
 
   const tickets = (rows ?? []).filter((r) => r._kind === "ticket");
-  const by = (st: string) => tickets.filter((t) => t.status === st).length;
-  const paidJod = tickets.filter((t) => t.status === "paid").reduce((s, t) => s + jod(t.price), 0);
+  const by = (st: string) => tickets.filter((t) => t.status === st).length + (st === "paid" ? tickets.filter((t) => t.status === "approved").length : 0) + (st === "receipt-review" ? tickets.filter((t) => t.status === "pending").length : 0);
+  const paidJod = tickets.filter((t) => t.status === "paid" || t.status === "approved").reduce((s, t) => s + jod(t.price), 0);
   const pendingJod = tickets.filter((t) => t.status && t.status !== "paid" && t.status !== "rejected").reduce((s, t) => s + jod(t.price), 0);
   const donations = (rows ?? []).filter((r) => r._kind === "donation");
   const needs = by("receipt-review") + by("loyalty-review");
@@ -727,7 +727,7 @@ function SiteSettings({ store, update, ping }: { store: Store; update: (fn: (s: 
 const h2: React.CSSProperties = { margin: "0 0 14px", fontSize: 16, fontWeight: 800, display: "flex", gap: 12, alignItems: "baseline", flexWrap: "wrap" };
 const td: React.CSSProperties = { padding: "7px 10px", borderBottom: "1px solid rgba(255,254,236,.1)", verticalAlign: "middle" };
 
-const TICKET_STATUSES = ["receipt-review", "loyalty-review", "approved-pay-now", "paid", "rejected"];
+const TICKET_STATUSES = ["pending", "approved", "rejected", "receipt-review", "loyalty-review", "approved-pay-now", "paid"];
 
 function Entries({ pw }: { pw: string }) {
   const [rows, setRows] = React.useState<Record<string, string>[]>([]);

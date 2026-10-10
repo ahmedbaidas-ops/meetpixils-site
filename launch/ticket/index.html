@@ -1,0 +1,231 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MeetPixils — Your ticket</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Cairo:wght@400;700;800&family=IBM+Plex+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>:root{--plum:#0F010A;--panel:#2F263B;--cream:#FFFEEC;--orange:#EF5229;--o2:#FF7A4F;--lilac:#CCA4FD;--cyan:#2EBEEF;--green:#5FD39A}
+*{box-sizing:border-box}
+body{margin:0;background:var(--plum);color:var(--cream);font-family:Poppins,system-ui,sans-serif;font-size:15.5px;line-height:1.6;min-height:100vh}
+[dir=rtl] body,body[dir=rtl]{font-family:Cairo,Poppins,sans-serif}
+.mono{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase}
+.wrap{max-width:920px;margin:0 auto;padding:0 clamp(18px,5vw,44px)}
+header.top{display:flex;align-items:center;gap:14px;padding:20px 0}
+header.top .spacer{margin-inline-start:auto}
+.cut8{clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px)}
+.cut12{clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px)}
+.cut16{clip-path:polygon(16px 0,100% 0,100% calc(100% - 16px),calc(100% - 16px) 100%,0 100%,0 16px)}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--orange);color:var(--plum);border:0;font-family:"IBM Plex Mono",monospace;font-size:13px;font-weight:700;letter-spacing:.02em;padding:15px 26px;cursor:pointer;text-decoration:none;transition:transform .2s cubic-bezier(.16,1,.3,1),background .2s}
+.btn:hover{transform:translateY(-2px);background:var(--o2)}
+.btn:disabled{opacity:.55;cursor:wait;transform:none}
+.btn.ghost{background:transparent;color:var(--cream);border:1px solid rgba(255,254,236,.32)}
+.btn.ghost:hover{background:rgba(255,254,236,.08)}
+.pill{display:inline-block;background:var(--orange);color:var(--plum);font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:700;letter-spacing:.08em;padding:6px 12px}
+h1{font-size:clamp(34px,7vw,64px);font-weight:800;letter-spacing:-.035em;line-height:1.02;margin:14px 0;text-wrap:balance}
+[dir=rtl] h1{letter-spacing:0;line-height:1.32}
+.dek{max-width:52ch;font-size:clamp(15px,1.8vw,17px);color:rgba(255,254,236,.72)}
+.card{background:rgba(255,254,236,.035);border:1px solid rgba(255,254,236,.16);padding:24px 26px}
+.field{display:grid;gap:6px;margin-bottom:16px}
+.field span{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;opacity:.6}
+.field input,.field select,.field textarea{font-family:inherit;font-size:15px;padding:13px 14px;min-height:48px;background:rgba(255,254,236,.06);color:var(--cream);border:1px solid rgba(255,254,236,.26);border-radius:0;outline:0;width:100%}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(46,190,239,.22)}
+.err{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--o2)}
+.ok{color:var(--green)}
+.deco{position:fixed;inset-inline-end:-40px;top:80px;width:260px;height:300px;pointer-events:none;opacity:.5;z-index:0}
+.deco i{position:absolute;background:var(--orange);animation:pop .6s cubic-bezier(.16,1,.3,1) both}
+@keyframes pop{from{opacity:0;transform:translateY(12px) scale(.6)}to{opacity:var(--o,1);transform:none}}
+.strip{height:6px;background:repeating-linear-gradient(90deg,var(--orange) 0 16px,transparent 16px 40px);opacity:.4;margin-top:60px}
+main{position:relative;z-index:1}
+footer{padding:40px 0 30px;font-family:"IBM Plex Mono",monospace;font-size:11px;opacity:.45}
+@media(prefers-reduced-motion:reduce){.deco i,.btn{animation:none;transition:none}}
+@media(max-width:720px){.deco{display:none}}
+ .deco i{background:var(--lilac)}.glowwrap{position:relative}
+@property --a{syntax:'<angle>';inherits:false;initial-value:0deg}
+@keyframes mpspin{to{--a:360deg}}
+.halo{position:absolute;inset:-4px;z-index:0;pointer-events:none;opacity:.55;filter:blur(18px);
+  background:conic-gradient(from var(--a),transparent 0 52%,#EF5229 68%,#FFC2AC 75%,#CCA4FD 84%,transparent 96%);animation:mpspin 3.6s linear infinite}
+.glowcard{position:relative;z-index:1;padding:2px;clip-path:polygon(18px 0,100% 0,100% calc(100% - 18px),calc(100% - 18px) 100%,0 100%,0 18px);
+  background:conic-gradient(from var(--a),rgba(255,254,236,.14) 0 52%,#EF5229 68%,#FFE0D4 75%,#CCA4FD 84%,rgba(255,254,236,.14) 96%);animation:mpspin 3.6s linear infinite}
+.plaincard{position:relative;padding:1px;background:rgba(255,254,236,.18);clip-path:polygon(18px 0,100% 0,100% calc(100% - 18px),calc(100% - 18px) 100%,0 100%,0 18px)}
+.cin{position:relative;height:100%;background:#14040F;clip-path:polygon(17px 0,100% 0,100% calc(100% - 17px),calc(100% - 17px) 100%,0 100%,0 17px);padding:28px 28px 26px;display:flex;flex-direction:column;gap:14px}
+.badge{position:absolute;z-index:3;top:-11px;inset-inline-end:22px;background:var(--orange);color:var(--plum);font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:700;letter-spacing:.14em;padding:6px 12px;clip-path:polygon(6px 0,100% 0,100% calc(100% - 6px),calc(100% - 6px) 100%,0 100%,0 6px)}
+.was{text-decoration:line-through;opacity:.45;font-family:"IBM Plex Mono",monospace;font-size:12px}
+.pricerow{display:flex;align-items:baseline;gap:10px;padding:12px 14px;border:1px solid rgba(255,254,236,.14);text-decoration:none;color:var(--cream);transition:background .2s,border-color .2s}
+.pricerow:hover{background:rgba(239,82,41,.08);border-color:rgba(239,82,41,.5)}
+.pricerow b{font-size:28px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.pricerow .nm{flex:1;font-size:14.5px}
+.sq{display:inline-block;width:10px;height:10px;clip-path:polygon(3px 0,100% 0,100% calc(100% - 3px),calc(100% - 3px) 100%,0 100%,0 3px)}
+.chip{display:inline-flex;align-items:center;gap:8px;font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:700;letter-spacing:.1em;padding:7px 12px}
+.ferr{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--o2);margin:-10px 0 14px}.ferr:empty{display:none}
+.field input[aria-invalid=true]{border-color:var(--o2)}
+.step{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--orange);margin:28px 0 12px}
+form>.step:first-child{margin-top:0}
+#lang{min-height:44px}
+[dir=rtl] .mono,[dir=rtl] .step,[dir=rtl] .field span,[dir=rtl] .pill,[dir=rtl] .badge,[dir=rtl] .chip,[dir=rtl] .btn,[dir=rtl] .was{letter-spacing:0;font-family:Cairo,Poppins,sans-serif}
+@media(prefers-reduced-motion:reduce){.halo,.glowcard{animation:none}}
+
+.state{display:inline-flex;align-items:center;gap:9px;font-family:"IBM Plex Mono",monospace;font-size:13px;font-weight:700;letter-spacing:.12em;padding:9px 14px}
+.st-pending{background:rgba(204,164,253,.16);color:var(--lilac)}
+.st-approved{background:rgba(95,211,154,.16);color:var(--green)}
+.st-rejected{background:rgba(255,122,79,.12);color:var(--o2)}
+.pulse{width:9px;height:9px;background:currentColor;animation:pl 1.6s ease-in-out infinite}
+@keyframes pl{50%{opacity:.25}}
+.stub{border:1px solid rgba(255,254,236,.18);display:grid;grid-template-columns:1fr auto;gap:0}
+.stub .info{padding:22px 24px;display:grid;gap:14px;align-content:start}
+.stub .qrside{padding:18px;border-inline-start:1px dashed rgba(255,254,236,.3);display:grid;place-items:center;gap:8px}
+.kv{display:grid;gap:2px}.kv span{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;opacity:.55}
+.kv b{font-size:16px;font-weight:700}
+.big{font-size:clamp(26px,5vw,36px)!important;font-weight:800!important;letter-spacing:-.02em;line-height:1.1}
+.qrbox{background:var(--cream);padding:10px}
+.qrbox canvas{display:block;width:200px;height:200px;image-rendering:pixelated}
+.approved .stub{border-color:rgba(95,211,154,.6)}
+.vh{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;clip:rect(0 0 0 0)}
+.track3{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:0 0 20px;max-width:560px}
+.track3 div{border-top:3px solid rgba(255,254,236,.18);padding-top:8px;font-size:12px;color:rgba(255,254,236,.6)}
+.track3 .done{border-color:var(--green);color:var(--cream)}.track3 .now{border-color:var(--lilac);color:var(--cream)}
+.passbig{font-size:22px!important;color:var(--orange)}
+.offline{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--lilac);margin:0 0 14px}
+@media(max-width:620px){.stub{grid-template-columns:1fr}.stub .qrside{border-inline-start:0;border-top:1px dashed rgba(255,254,236,.3)}
+  .approved .stub .qrside{order:-1;border-top:0;border-bottom:1px dashed rgba(255,254,236,.3)}
+  .approved .qrbox canvas{width:min(72vw,280px);height:min(72vw,280px)}}
+@media(prefers-reduced-motion:reduce){.pulse{animation:none}}
+</style></head><body>
+<main class="wrap" style="max-width:760px">
+<header class="top">
+  <a href="/" style="display:flex;align-items:center;gap:12px;color:var(--cream);text-decoration:none;min-height:44px" aria-label="MeetPixils home">
+    <svg width="44" height="18" viewBox="0 0 235 96" aria-hidden="true"><path fill="#EF5229" d="M93.7838 0V47.8009L78.2648 47.7211C75.9043 47.7211 73.5756 47.8168 71.3108 48.0242C57.4028 49.2682 46.9398 61.5335 46.9398 75.7605V95.4423H0.0321426V47.8009H20.2403C20.336 47.8009 20.4317 47.8009 20.5274 47.8009C35.2648 47.753 46.9398 34.8817 46.9398 19.8732V0.0159408H93.7838V0Z"/><path fill="#EF5229" d="M234.443 47.8008V95.4262H187.583V79.7C187.583 77.2916 187.503 74.931 187.296 72.6183C186.195 59.8906 176.371 50.0178 164.281 48.1357C150.803 49.7786 140.755 61.8364 140.755 75.7604V95.4422H93.8315V47.8008H114.087C114.183 47.8008 114.295 47.8008 114.391 47.8008C129.128 47.753 140.755 34.8976 140.755 19.8731V0.0158691H187.599V20.9098C187.647 35.9184 200.199 47.8008 214.953 47.8008H234.459H234.443Z"/></svg>
+    <span class="mono" style="opacity:.75">MeetPixils</span></a>
+  <span class="spacer"></span>
+  <button id="lang" class="btn ghost" style="padding:9px 14px;font-size:12px" aria-label="Switch language">عربي</button>
+</header>
+<p id="live" role="status" class="vh"></p>
+<div id="view" style="margin:26px 0 40px"></div>
+<div class="strip"></div>
+<footer data-i>© 2026 MeetPixils · Amman, Jordan|© ٢٠٢٦ ميت بكسلز · عمّان، الأردن</footer>
+</main>
+<script src="/assets/qrcode.js"></script>
+<script>
+(function(){
+var AR = false, WA = '962791319628', TOKEN = new URLSearchParams(location.search).get('t') || '', DATA = null, STATE = 'loading', MSG = '', TIMER = null, CHECKED = null;
+function $(id){ return document.getElementById(id); }
+function L(en, ar){ return AR ? ar : en; }
+function arNum(n){ return String(n).replace(/\d/g, function(d){ return '٠١٢٣٤٥٦٧٨٩'[d]; }); }
+function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+function daysAr(n){ return n === 1 ? 'يوم' : n === 2 ? 'يومين' : n <= 10 ? arNum(n) + ' أيام' : arNum(n) + ' يوم'; }
+var LAST_STATUS = null, OFFLINE = null;
+function fmt(iso){ if (!iso) return ''; var d = new Date(iso); return isNaN(d) ? '' : d.toLocaleString(AR ? 'ar-JO' : 'en-GB', {day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit'}); }
+function drawQR(canvas, text){
+  var qr = qrcode(0, 'M'); qr.addData(text); qr.make();
+  var n = qr.getModuleCount(), q = 4, cell = Math.max(4, Math.floor(400 / (n + q * 2))), dim = cell * (n + q * 2);
+  canvas.width = canvas.height = dim;
+  var c = canvas.getContext('2d'); c.fillStyle = '#FFFEEC'; c.fillRect(0, 0, dim, dim); c.fillStyle = '#0F010A';
+  for (var r = 0; r < n; r++) for (var k = 0; k < n; k++) if (qr.isDark(r, k)) c.fillRect((k + q) * cell, (r + q) * cell, cell, cell);
+}
+function kv(label, value, cls){ return '<div class="kv"><span>' + esc(label) + '</span><b' + (cls ? ' class="' + cls + '"' : '') + '>' + esc(value) + '</b></div>'; }
+function passName(t){ var p = DATA && DATA.passes && DATA.passes[t.pass_id]; return p ? L(p.en, p.ar) : t.pass; }
+function eventLine(){
+  var ev = DATA && DATA.event ? (AR ? DATA.event.ar : DATA.event.en) : null;
+  var when = ev && (ev.date || ev.venue) ? [ev.date, ev.venue].filter(Boolean).join(' · ') : L('Date & venue announced soon', 'الموعد والمكان بينعلنوا قريباً');
+  return {name: ev ? ev.name : 'MeetPixils', when: when};
+}
+function lookupForm(note){
+  return '<h1 style="font-size:clamp(28px,5vw,40px)">' + L('Find your ticket', 'لاقي تذكرتك') + '</h1>' +
+    (note ? '<p class="err" style="margin:0 0 16px">' + esc(note) + '</p>' : '<p class="dek" style="margin:0 0 20px">' + L('Lost your QR? Enter the email you used and your reference (it starts with MP-).', 'ضاع الكود؟ اكتب الإيميل اللي استعملته ورقم المرجع (بيبلّش بـ MP-).') + '</p>') +
+    '<form id="lk" class="card cut16" novalidate style="max-width:520px">' +
+    '<label class="field"><span>' + L('EMAIL', 'الإيميل') + '</span><input id="lkEmail" type="email" dir="ltr" autocomplete="email"></label>' +
+    '<label class="field"><span>' + L('REFERENCE', 'المرجع') + '</span><input id="lkRef" dir="ltr" placeholder="MP-…" autocapitalize="characters"></label>' +
+    '<p id="lkErr" class="err" aria-live="assertive" style="margin:0 0 12px"></p>' +
+    '<button class="btn cut12" type="submit">' + L('Find my ticket →', 'لاقي تذكرتي ←') + '</button></form>';
+}
+function render(){
+  var v = $('view'), h = '';
+  if (STATE === 'loading') { v.innerHTML = '<p class="mono" style="opacity:.6">' + L('Loading your ticket…', 'عم نجيب تذكرتك…') + '</p>'; return; }
+  if (STATE === 'lookup') { v.innerHTML = lookupForm(MSG); wireLookup(); return; }
+  var t = DATA.ticket, ev = eventLine(), url = location.origin + '/ticket/?t=' + TOKEN;
+  if (t.status === 'approved') {
+    h += (OFFLINE ? '<p class="offline">' + L('Offline — showing your ticket as last checked ', 'بدون إنترنت — تذكرتك حسب آخر تحديث ') + fmt(OFFLINE) + '</p>' : '') +
+      '<div class="approved"><span class="state st-approved cut8">✓ ' + L('APPROVED', 'مؤكدة') + '</span>' +
+      '<h1 style="font-size:clamp(28px,5vw,42px);margin:14px 0 18px">' + L("You're in.", 'إنت جوّا.') + '</h1>' +
+      '<div class="stub cut16"><div class="info">' +
+        kv(L('EVENT', 'الحدث'), ev.name) + kv(L('WHEN · WHERE', 'متى · وين'), ev.when) +
+        kv(L('NAME', 'الاسم'), t.name, 'big') + kv(L('PASS', 'الباس'), passName(t) + ' · ' + t.price, 'passbig') +
+        kv(L('REFERENCE', 'المرجع'), t.ref) +
+      '</div><div class="qrside"><div class="qrbox cut8"><canvas id="qr" role="img" aria-label="' + L('Ticket QR code', 'كود التذكرة') + '"></canvas></div>' +
+        '<span class="mono" style="opacity:.6;font-size:10px">' + L('SHOW THIS AT THE DOOR', 'فرجينا هاد عالباب') + '</span></div></div></div>';
+  } else if (t.status === 'rejected') {
+    var wa = 'https://wa.me/' + WA + '?text=' + encodeURIComponent('Hi MeetPixils — my ticket ' + t.ref + ' shows "not verified". Can you help?');
+    h += '<span class="state st-rejected cut8">✗ ' + L('NOT VERIFIED', 'ما تأكد') + '</span>' +
+      '<h1 style="font-size:clamp(26px,5vw,38px);margin:14px 0 10px">' + L("We couldn't verify your payment.", 'ما قدرنا نأكد الدفع.') + '</h1>' +
+      '<p class="dek" style="margin:0 0 20px">' + L("We couldn't match a CliQ transfer to this ticket. If you did pay, message us with your reference and the transfer screenshot and we'll sort it out.",
+        'ما لقينا تحويل كليك مطابق لهالتذكرة. إذا دفعت، راسلنا برقم المرجع وسكرين شوت التحويل ومنحلها.') + '</p>' +
+      '<div class="card cut12" style="display:grid;gap:12px;max-width:520px">' + kv(L('REFERENCE', 'المرجع'), t.ref) + kv(L('PASS', 'الباس'), passName(t) + ' · ' + t.price) + '</div>' +
+      '<p style="margin:20px 0 0"><a class="btn cut12" href="' + wa + '" target="_blank" rel="noopener">' + L('Message us on WhatsApp →', 'راسلنا عالواتساب ←') + '</a></p>';
+  } else {
+    var days = DATA.review_days || 2, due = new Date(new Date(t.created || Date.now()).getTime() + days * 864e5).toLocaleString(AR ? 'ar-JO' : 'en-GB', {weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit'});
+    h += '<span class="state st-pending cut8"><i class="pulse"></i>' + L('PENDING REVIEW', 'قيد المراجعة') + '</span>' +
+      '<h1 style="font-size:clamp(26px,5vw,38px);margin:14px 0 10px">' + L('Payment under review.', 'الدفع قيد المراجعة.') + '</h1>' +
+      '<p class="dek" style="margin:0 0 16px">' + L('We check every CliQ transfer by hand — expected by ' + due + '. This page and your QR turn into your full ticket the moment we approve, and we\'ll email you too.',
+        'منراجع كل تحويل كليك يدوياً — متوقع قبل ' + due + '. هالصفحة والكود بيتحوّلوا لتذكرتك كاملة أول ما نوافق، ومنبعتلك إيميل كمان.') + '</p>' +
+      '<div class="track3"><div class="done">✓ ' + L('Proof sent', 'انبعت الإثبات') + '</div><div class="now">' + L('Payment check', 'مراجعة الدفع') + '</div><div>' + L('Ticket ready', 'التذكرة جاهزة') + '</div></div>' +
+      '<div class="stub cut16"><div class="info">' +
+        kv(L('NAME', 'الاسم'), t.name) + kv(L('PASS', 'الباس'), passName(t) + ' · ' + t.price) +
+        kv(L('REFERENCE', 'المرجع'), t.ref) + kv(L('SUBMITTED', 'وقت الطلب'), fmt(t.created)) +
+      '</div><div class="qrside"><div class="qrbox cut8"><canvas id="qr" role="img" aria-label="' + L('Ticket QR code', 'كود التذكرة') + '"></canvas></div>' +
+        '<span class="mono" style="opacity:.6;font-size:10px">' + L('YOUR TICKET QR', 'كود تذكرتك') + '</span></div></div>' +
+      '<p style="margin:18px 0 0;display:flex;gap:14px;align-items:center;flex-wrap:wrap"><button id="again" class="btn ghost cut8" style="font-size:12px">' + L('Check again', 'شيك كمان مرة') + '</button>' +
+      '<span class="mono" style="opacity:.5;font-size:10.5px">' + (CHECKED ? L('Checked ', 'آخر تحديث ') + fmt(CHECKED.toISOString()) + ' · ' : '') + L('updates automatically', 'بيتحدّث تلقائياً') + '</span></p>';
+  }
+  v.innerHTML = h;
+  if (t.status !== LAST_STATUS) { $('live').textContent = t.status === 'approved' ? L('Your ticket is approved.', 'تذكرتك مؤكدة.') : t.status === 'rejected' ? L('Payment not verified.', 'ما تأكد الدفع.') : L('Payment under review.', 'الدفع قيد المراجعة.'); LAST_STATUS = t.status; }
+  var cv = $('qr'); if (cv) drawQR(cv, url);
+  var ag = $('again'); if (ag) ag.addEventListener('click', load);
+}
+function wireLookup(){
+  $('lk').addEventListener('submit', function(e){
+    e.preventDefault();
+    var em = $('lkEmail').value.trim(), rf = $('lkRef').value.trim();
+    if (!em || !rf) { $('lkErr').textContent = L('Enter both your email and your reference.', 'اكتب الإيميل والمرجع.'); return; }
+    fetch('/api/ticket-view.php', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({email: em, ref: rf})})
+    .then(function(r){ return r.json().then(function(j){ return {r: r, j: j}; }); })
+    .then(function(x){
+      if (!x.r.ok) { $('lkErr').textContent = L('No ticket matches that email and reference.', 'ما في تذكرة مطابقة لهالإيميل والمرجع.'); return; }
+      TOKEN = x.j.token; DATA = x.j; STATE = 'ticket'; CHECKED = new Date();
+      history.replaceState(null, '', '/ticket/?t=' + TOKEN); render(); poll();
+    })
+    .catch(function(){ $('lkErr').textContent = L("Couldn't reach the server — try again.", 'ما قدرنا نوصل للسيرفر — جرّب كمان مرة.'); });
+  });
+}
+function load(){
+  if (!TOKEN) { try { var last = localStorage.getItem('tk-last'); var m = last && /[?&]t=([a-f0-9]{32})/.exec(last); if (m) { TOKEN = m[1]; history.replaceState(null, '', '/ticket/?t=' + TOKEN); } } catch(e){} }
+  if (!/^[a-f0-9]{32}$/.test(TOKEN)) { STATE = 'lookup'; MSG = TOKEN ? L("That ticket link isn't valid — find your ticket below.", 'رابط التذكرة مش صحيح — لاقيها من تحت.') : ''; render(); return; }
+  fetch('/api/ticket-view.php?t=' + TOKEN, {cache: 'no-store'})
+  .then(function(r){ return r.json().then(function(j){ return {r: r, j: j}; }); })
+  .then(function(x){
+    if (!x.r.ok) { STATE = 'lookup'; MSG = L("We couldn't find this ticket — find it with your email and reference.", 'ما لقينا هالتذكرة — لاقيها بالإيميل والمرجع.'); render(); return; }
+    DATA = x.j; STATE = 'ticket'; CHECKED = new Date(); OFFLINE = null;
+    try { localStorage.setItem('tk-cache-' + TOKEN, JSON.stringify({at: CHECKED.toISOString(), data: DATA})); } catch(e){}
+    render(); poll();
+  })
+  .catch(function(){
+    try { var c = JSON.parse(localStorage.getItem('tk-cache-' + TOKEN) || 'null'); if (c && c.data) { DATA = c.data; OFFLINE = c.at; STATE = 'ticket'; render(); return; } } catch(e){}
+    if (STATE === 'loading') { $('view').innerHTML = '<p class="err">' + L("Couldn't reach the server — check your connection and refresh.", 'ما قدرنا نوصل للسيرفر — تأكد من الإنترنت وحدّث الصفحة.') + '</p>'; } });
+}
+function poll(){
+  clearTimeout(TIMER);
+  if (DATA && DATA.ticket && DATA.ticket.status === 'pending') TIMER = setTimeout(load, 60000);
+}
+document.addEventListener('visibilitychange', function(){ if (!document.hidden && STATE === 'ticket' && DATA.ticket.status === 'pending') load(); });
+function i18n(){
+  document.querySelectorAll('[data-i]').forEach(function(el){
+    if (!el.dataset.en) { var p = el.innerHTML.split('|'); el.dataset.en = p[0]; el.dataset.ar = p[1] || p[0]; }
+    el.innerHTML = AR ? el.dataset.ar : el.dataset.en;
+  });
+  document.documentElement.lang = AR ? 'ar' : 'en'; document.body.dir = AR ? 'rtl' : 'ltr';
+  $('lang').textContent = AR ? 'EN' : 'عربي';
+}
+$('lang').addEventListener('click', function(){ AR = !AR; try { localStorage.setItem('mp-lang', AR ? 'ar' : 'en'); } catch(e){} i18n(); if (STATE !== 'lookup') render(); else { var em = $('lkEmail').value, rf = $('lkRef').value; render(); $('lkEmail').value = em; $('lkRef').value = rf; } });
+try { AR = localStorage.getItem('mp-lang') === 'ar'; } catch(e){}
+i18n(); render(); load();
+})();
+</script></body></html>

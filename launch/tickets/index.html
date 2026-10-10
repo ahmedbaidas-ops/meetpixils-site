@@ -1,0 +1,356 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MeetPixils — Get your ticket</title>
+<meta name="description" content="Early-bird tickets: Normal 15 JOD · VIP 25 JOD. Pay with CliQ.">
+<link rel="icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Cairo:wght@400;700;800&family=IBM+Plex+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>:root{--plum:#0F010A;--panel:#2F263B;--cream:#FFFEEC;--orange:#EF5229;--o2:#FF7A4F;--lilac:#CCA4FD;--cyan:#2EBEEF;--green:#5FD39A}
+*{box-sizing:border-box}
+body{margin:0;background:var(--plum);color:var(--cream);font-family:Poppins,system-ui,sans-serif;font-size:15.5px;line-height:1.6;min-height:100vh}
+[dir=rtl] body,body[dir=rtl]{font-family:Cairo,Poppins,sans-serif}
+.mono{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase}
+.wrap{max-width:920px;margin:0 auto;padding:0 clamp(18px,5vw,44px)}
+header.top{display:flex;align-items:center;gap:14px;padding:20px 0}
+header.top .spacer{margin-inline-start:auto}
+.cut8{clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px)}
+.cut12{clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px)}
+.cut16{clip-path:polygon(16px 0,100% 0,100% calc(100% - 16px),calc(100% - 16px) 100%,0 100%,0 16px)}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--orange);color:var(--plum);border:0;font-family:"IBM Plex Mono",monospace;font-size:13px;font-weight:700;letter-spacing:.02em;padding:15px 26px;cursor:pointer;text-decoration:none;transition:transform .2s cubic-bezier(.16,1,.3,1),background .2s}
+.btn:hover{transform:translateY(-2px);background:var(--o2)}
+.btn:disabled{opacity:.55;cursor:wait;transform:none}
+.btn.ghost{background:transparent;color:var(--cream);border:1px solid rgba(255,254,236,.32)}
+.btn.ghost:hover{background:rgba(255,254,236,.08)}
+.pill{display:inline-block;background:var(--orange);color:var(--plum);font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:700;letter-spacing:.08em;padding:6px 12px}
+h1{font-size:clamp(34px,7vw,64px);font-weight:800;letter-spacing:-.035em;line-height:1.02;margin:14px 0;text-wrap:balance}
+[dir=rtl] h1{letter-spacing:0;line-height:1.32}
+.dek{max-width:52ch;font-size:clamp(15px,1.8vw,17px);color:rgba(255,254,236,.72)}
+.card{background:rgba(255,254,236,.035);border:1px solid rgba(255,254,236,.16);padding:24px 26px}
+.field{display:grid;gap:6px;margin-bottom:16px}
+.field span{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;opacity:.6}
+.field input,.field select,.field textarea{font-family:inherit;font-size:15px;padding:13px 14px;min-height:48px;background:rgba(255,254,236,.06);color:var(--cream);border:1px solid rgba(255,254,236,.26);border-radius:0;outline:0;width:100%}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(46,190,239,.22)}
+.err{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--o2)}
+.ok{color:var(--green)}
+.deco{position:fixed;inset-inline-end:-40px;top:80px;width:260px;height:300px;pointer-events:none;opacity:.5;z-index:0}
+.deco i{position:absolute;background:var(--orange);animation:pop .6s cubic-bezier(.16,1,.3,1) both}
+@keyframes pop{from{opacity:0;transform:translateY(12px) scale(.6)}to{opacity:var(--o,1);transform:none}}
+.strip{height:6px;background:repeating-linear-gradient(90deg,var(--orange) 0 16px,transparent 16px 40px);opacity:.4;margin-top:60px}
+main{position:relative;z-index:1}
+footer{padding:40px 0 30px;font-family:"IBM Plex Mono",monospace;font-size:11px;opacity:.45}
+@media(prefers-reduced-motion:reduce){.deco i,.btn{animation:none;transition:none}}
+@media(max-width:720px){.deco{display:none}}
+ .deco i{background:var(--lilac)}.glowwrap{position:relative}
+@property --a{syntax:'<angle>';inherits:false;initial-value:0deg}
+@keyframes mpspin{to{--a:360deg}}
+.halo{position:absolute;inset:-4px;z-index:0;pointer-events:none;opacity:.55;filter:blur(18px);
+  background:conic-gradient(from var(--a),transparent 0 52%,#EF5229 68%,#FFC2AC 75%,#CCA4FD 84%,transparent 96%);animation:mpspin 3.6s linear infinite}
+.glowcard{position:relative;z-index:1;padding:2px;clip-path:polygon(18px 0,100% 0,100% calc(100% - 18px),calc(100% - 18px) 100%,0 100%,0 18px);
+  background:conic-gradient(from var(--a),rgba(255,254,236,.14) 0 52%,#EF5229 68%,#FFE0D4 75%,#CCA4FD 84%,rgba(255,254,236,.14) 96%);animation:mpspin 3.6s linear infinite}
+.plaincard{position:relative;padding:1px;background:rgba(255,254,236,.18);clip-path:polygon(18px 0,100% 0,100% calc(100% - 18px),calc(100% - 18px) 100%,0 100%,0 18px)}
+.cin{position:relative;height:100%;background:#14040F;clip-path:polygon(17px 0,100% 0,100% calc(100% - 17px),calc(100% - 17px) 100%,0 100%,0 17px);padding:28px 28px 26px;display:flex;flex-direction:column;gap:14px}
+.badge{position:absolute;z-index:3;top:-11px;inset-inline-end:22px;background:var(--orange);color:var(--plum);font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:700;letter-spacing:.14em;padding:6px 12px;clip-path:polygon(6px 0,100% 0,100% calc(100% - 6px),calc(100% - 6px) 100%,0 100%,0 6px)}
+.was{text-decoration:line-through;opacity:.45;font-family:"IBM Plex Mono",monospace;font-size:12px}
+.pricerow{display:flex;align-items:baseline;gap:10px;padding:12px 14px;border:1px solid rgba(255,254,236,.14);text-decoration:none;color:var(--cream);transition:background .2s,border-color .2s}
+.pricerow:hover{background:rgba(239,82,41,.08);border-color:rgba(239,82,41,.5)}
+.pricerow b{font-size:28px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.pricerow .nm{flex:1;font-size:14.5px}
+.sq{display:inline-block;width:10px;height:10px;clip-path:polygon(3px 0,100% 0,100% calc(100% - 3px),calc(100% - 3px) 100%,0 100%,0 3px)}
+.chip{display:inline-flex;align-items:center;gap:8px;font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:700;letter-spacing:.1em;padding:7px 12px}
+.ferr{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--o2);margin:-10px 0 14px}.ferr:empty{display:none}
+.field input[aria-invalid=true]{border-color:var(--o2)}
+.step{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--orange);margin:28px 0 12px}
+form>.step:first-child{margin-top:0}
+#lang{min-height:44px}
+[dir=rtl] .mono,[dir=rtl] .step,[dir=rtl] .field span,[dir=rtl] .pill,[dir=rtl] .badge,[dir=rtl] .chip,[dir=rtl] .btn,[dir=rtl] .was{letter-spacing:0;font-family:Cairo,Poppins,sans-serif}
+@media(prefers-reduced-motion:reduce){.halo,.glowcard{animation:none}}
+
+.passes{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.pc{position:relative;display:flex;flex-direction:column;gap:8px;padding:18px 20px;border:1px solid rgba(255,254,236,.2);cursor:pointer;transition:border-color .2s,background .2s}
+.pc input{position:absolute;opacity:0;pointer-events:none}
+.pc:has(input:checked){border-color:var(--orange);background:rgba(239,82,41,.09)}
+.pc:has(input:focus-visible){outline:2px solid var(--o2);outline-offset:2px}
+.pc:hover{background:rgba(255,254,236,.04)}
+.pc .top{display:flex;align-items:baseline;gap:8px}
+.pc .nm{font-weight:700;font-size:15.5px;flex:1}
+.pc b{font-size:30px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.pc ul{list-style:none;margin:2px 0 0;padding:0;display:grid;gap:5px;font-size:13px;color:rgba(255,254,236,.72)}
+.pc li::before{content:"";display:inline-block;width:7px;height:7px;background:var(--orange);margin-inline-end:8px;vertical-align:1px}
+.two{display:grid;gap:0 14px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.cliq{border:1px solid rgba(95,211,154,.55);padding:18px 20px}
+.alias{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:6px 0 12px}
+.alias b{font-family:"IBM Plex Mono",monospace;font-size:24px;letter-spacing:.06em}
+.howto{margin:0;padding:0;list-style:none;display:grid;gap:6px;font-size:13.5px;color:rgba(255,254,236,.75);counter-reset:s}
+.howto li{counter-increment:s}.howto li::before{content:counter(s) " · ";font-family:"IBM Plex Mono",monospace;color:var(--green)}
+.drop{display:flex;align-items:center;gap:14px;min-height:72px;padding:14px 18px;border:1px dashed rgba(255,254,236,.32);cursor:pointer;transition:border-color .2s,background .2s}
+.drop:hover{background:rgba(255,254,236,.04)}.drop:focus-within{outline:2px solid var(--o2);outline-offset:2px}
+.drop.ok{border-style:solid;border-color:var(--green)}
+.drop img{width:52px;height:52px;object-fit:cover}
+.qrbox{display:inline-block;background:var(--cream);padding:10px}
+.qrbox canvas{display:block;width:220px;height:220px;image-rendering:pixelated}
+.saved{font-family:"IBM Plex Mono",monospace;font-size:10.5px;opacity:.5;margin:10px 0 0}
+.vh{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;clip:rect(0 0 0 0)}
+.who{font-size:12.5px;color:rgba(255,254,236,.62);margin:-4px 0 12px}
+.track3{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:0 0 18px;max-width:520px}
+.track3 div{border-top:3px solid rgba(255,254,236,.18);padding-top:8px;font-size:12px;color:rgba(255,254,236,.6)}
+.track3 .done{border-color:var(--green);color:var(--cream)}.track3 .now{border-color:var(--lilac);color:var(--cream)}
+.help{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--lilac);display:inline-block;padding:12px 0;min-height:44px}
+@media(max-width:560px){#submit{width:100%;justify-content:center}}
+</style></head><body>
+<main class="wrap" style="max-width:820px">
+<header class="top">
+  <a href="/" style="display:flex;align-items:center;gap:12px;color:var(--cream);text-decoration:none;min-height:44px" aria-label="MeetPixils home">
+    <svg width="44" height="18" viewBox="0 0 235 96" aria-hidden="true"><path fill="#EF5229" d="M93.7838 0V47.8009L78.2648 47.7211C75.9043 47.7211 73.5756 47.8168 71.3108 48.0242C57.4028 49.2682 46.9398 61.5335 46.9398 75.7605V95.4423H0.0321426V47.8009H20.2403C20.336 47.8009 20.4317 47.8009 20.5274 47.8009C35.2648 47.753 46.9398 34.8817 46.9398 19.8732V0.0159408H93.7838V0Z"/><path fill="#EF5229" d="M234.443 47.8008V95.4262H187.583V79.7C187.583 77.2916 187.503 74.931 187.296 72.6183C186.195 59.8906 176.371 50.0178 164.281 48.1357C150.803 49.7786 140.755 61.8364 140.755 75.7604V95.4422H93.8315V47.8008H114.087C114.183 47.8008 114.295 47.8008 114.391 47.8008C129.128 47.753 140.755 34.8976 140.755 19.8731V0.0158691H187.599V20.9098C187.647 35.9184 200.199 47.8008 214.953 47.8008H234.459H234.443Z"/></svg>
+    <span class="mono" style="opacity:.75">MeetPixils</span></a>
+  <span class="spacer"></span>
+  <button id="lang" class="btn ghost" style="padding:9px 14px;font-size:12px" aria-label="Switch language">عربي</button>
+</header>
+
+<section style="padding:18px 0 0">
+  <span class="pill" id="ebPill" data-i>EARLYBIRD|حجز مبكر</span>
+  <h1 data-i>Get your ticket.|احجز تذكرتك.</h1>
+  <p class="dek" id="dek"></p>
+</section>
+
+<form id="form" class="card cut16" style="margin:22px 0 34px" novalidate>
+  <p class="step" data-i>1 · Choose your pass|١ · اختار الباس</p>
+  <div class="passes" id="passes" role="radiogroup" aria-label="Pass"></div>
+  <p class="ferr" id="err-pass" style="margin:8px 0 0"></p>
+
+  <p class="step" data-i>2 · Your details|٢ · معلوماتك</p>
+  <label class="field"><span data-i>FULL NAME — AS IT GOES ON YOUR TICKET|الاسم الكامل — مثل ما بينكتب عالتذكرة</span><input id="name" autocomplete="name" aria-describedby="err-name"></label>
+  <p class="ferr" id="err-name"></p>
+  <div class="two">
+    <div><label class="field"><span data-i>PHONE NUMBER (WHATSAPP)|رقم الهاتف (واتساب)</span><input id="phone" type="tel" inputmode="tel" dir="ltr" autocomplete="tel" placeholder="079 123 4567" aria-describedby="err-phone"></label><p class="ferr" id="err-phone"></p></div>
+    <div><label class="field"><span data-i>EMAIL|الإيميل</span><input id="email" type="email" dir="ltr" autocomplete="email" placeholder="name@email.com" aria-describedby="err-email"></label><p class="ferr" id="err-email"></p></div>
+  </div>
+
+  <p class="step" data-i>3 · Pay with CliQ|٣ · ادفع عبر كليك</p>
+  <div class="cliq cut12">
+    <p style="margin:0;font-size:15px" id="sendLine"></p>
+    <div class="alias"><b dir="ltr" id="alias">PIXILATED</b>
+      <button type="button" id="copy" class="btn ghost cut8" style="padding:9px 14px;font-size:11px;min-height:44px" data-i>Copy alias|انسخ</button></div>
+    <p class="who" data-i>PIXILATED is the design studio behind MeetPixils — that's the name your bank will show.|PIXILATED هو استوديو التصميم ورا ميت بكسلز — وهاد الاسم اللي رح يطلعلك بالبنك.</p>
+    <ol class="howto">
+      <li data-i>Open your bank app and choose CliQ.|افتح تطبيق البنك واختار كليك.</li>
+      <li data-i>Send to the alias above — check the name says PIXILATED.|حوّل عالـ alias فوق — تأكد إنه الاسم PIXILATED.</li>
+      <li data-i>Write your phone number in the transfer note — it helps us match your payment.|اكتب رقم تلفونك بملاحظة التحويل — بيساعدنا نطابق الدفع.</li>
+      <li data-i>Screenshot the confirmation screen.|خذ سكرين شوت لشاشة التأكيد.</li>
+    </ol>
+    <a class="help" href="https://wa.me/962791319628" target="_blank" rel="noopener" data-i>Stuck? WhatsApp us ↗|علقت؟ راسلنا واتساب ↗</a>
+  </div>
+
+  <p class="step" data-i>4 · Attach your proof of payment|٤ · ارفق إثبات الدفع</p>
+  <label class="drop cut12" id="drop"><input id="file" type="file" accept="image/*" class="vh" aria-describedby="err-proof">
+    <span id="dropLabel"></span></label>
+  <p class="ferr" id="err-proof" style="margin:8px 0 0"></p>
+
+  <input id="hp" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+  <p id="formErr" class="err" aria-live="assertive" tabindex="-1" style="margin:22px 0 12px;outline:none"></p>
+  <button id="submit" type="submit" class="btn cut12"></button>
+  <p class="saved" id="reviewNote"></p>
+</form>
+
+<section id="done" hidden class="card cut16" style="margin:22px 0 34px;border-color:var(--orange)" tabindex="-1">
+  <span class="chip cut8" style="background:rgba(239,82,41,.15);color:var(--o2)"><i class="sq" style="background:var(--orange)"></i><span data-i>PENDING REVIEW|قيد المراجعة</span></span>
+  <h2 style="font-size:26px;font-weight:800;margin:14px 0 8px" data-i>Proof received ✓|وصلنا الإثبات ✓</h2>
+  <p id="doneText" style="margin:0 0 14px;color:rgba(255,254,236,.8);max-width:56ch"></p>
+  <div class="track3" id="track3"></div>
+  <div style="display:flex;gap:22px;flex-wrap:wrap;align-items:flex-start">
+    <div class="qrbox cut8"><canvas id="qr" width="220" height="220" role="img" data-al="Your ticket QR code|كود تذكرتك"></canvas></div>
+    <div style="display:grid;gap:10px;min-width:220px">
+      <p class="mono" style="margin:0;opacity:.7"><span data-i>REFERENCE|المرجع</span>: <b id="doneRef" dir="ltr"></b></p>
+      <a id="openTicket" class="btn cut8" style="font-size:12px"><span data-i>Open my ticket →|افتح تذكرتي ←</span></a>
+      <a id="waSelf" class="btn ghost cut8" style="font-size:12px" target="_blank" rel="noopener" data-i>Send it to my WhatsApp|ابعته لواتسابي</a>
+      <button id="shareBtn" type="button" class="btn ghost cut8" style="font-size:12px" hidden data-i>Share / save…|شارك / احفظ…</button>
+      <a id="dlQR" class="btn ghost cut8" style="font-size:12px" data-i>Download ticket image|نزّل صورة التذكرة</a>
+      <p class="mono" style="margin:0;opacity:.5;font-size:10.5px;line-height:1.7" data-i>We also emailed you this link.|بعتنالك الرابط عالإيميل كمان.</p>
+    </div>
+  </div>
+</section>
+<div class="strip"></div>
+<footer data-i>© 2026 MeetPixils · Amman, Jordan|© ٢٠٢٦ ميت بكسلز · عمّان، الأردن</footer>
+</main>
+<script src="/assets/qrcode.js"></script>
+<script>
+(function(){
+var AR = false, TRIED = false, SENDING = false, IMG = null;
+var INFO = {earlybird: true, alias: 'PIXILATED', review_days: 2, passes: {
+  normal: {price: 15, was: 30, en: 'Normal pass', ar: 'الباس العادي', perks_en: ['Networking with designers', 'Talks & workshops'], perks_ar: ['تعارف مع المصممين', 'حوارات وورشات']},
+  vip: {price: 25, was: 50, en: 'VIP pass', ar: 'باس VIP', perks_en: ['Everything in Normal', 'Private 1:1 time with mentors', 'Food & drinks', 'Priority entry'], perks_ar: ['كل شي بالعادي', 'وقت خاص ١:١ مع المنتورز', 'أكل ومشروبات', 'أولوية الدخول']}}};
+var S = {pass: '', name: '', phone: '', email: ''};
+function $(id){ return document.getElementById(id); }
+function L(en, ar){ return AR ? ar : en; }
+function arNum(n){ return String(n).replace(/\d/g, function(d){ return '٠١٢٣٤٥٦٧٨٩'[d]; }); }
+function N(n){ return AR ? arNum(n) : String(n); }
+function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+function price(){ return S.pass && INFO.passes[S.pass] ? INFO.passes[S.pass].price : null; }
+function daysAr(n){ return n === 1 ? 'يوم' : n === 2 ? 'يومين' : n <= 10 ? arNum(n) + ' أيام' : arNum(n) + ' يوم'; }
+function dueBy(iso, days){ var d = new Date(new Date(iso || Date.now()).getTime() + days * 864e5); return d.toLocaleString(AR ? 'ar-JO' : 'en-GB', {weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit'}); }
+
+/* ---------- validation (mirrors api/ticket-lib.php) ---------- */
+function okEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()); }
+function normPhone(v){
+  var d = String(v).replace(/[\u0660-\u0669]/g, function(c){ return c.charCodeAt(0) - 0x660; }).replace(/[\u06F0-\u06F9]/g, function(c){ return c.charCodeAt(0) - 0x6F0; }).replace(/[^\d+]/g, ''); if (d.indexOf('00') === 0) d = '+' + d.slice(2);
+  var g = d.replace(/^\+/, ''); if (!/^\d+$/.test(g)) return null;
+  if (d[0] !== '+') { if (/^07\d{8}$/.test(g)) return '+962' + g.slice(1); if (/^7\d{8}$/.test(g)) return '+962' + g; if (/^9627\d{8}$/.test(g)) return '+' + g; return null; }
+  if (g.indexOf('962') === 0) return /^9627\d{8}$/.test(g) ? '+' + g : null;
+  return (g.length >= 8 && g.length <= 15) ? '+' + g : null;
+}
+function errorsFor(){
+  var E = {};
+  if (!INFO.passes[S.pass]) E.pass = L('Choose a pass.', 'اختار الباس.');
+  if (S.name.trim().length < 2) E.name = L('Add your full name — it goes on the ticket.', 'اكتب اسمك الكامل — بينكتب عالتذكرة.');
+  if (!normPhone(S.phone)) E.phone = L('Enter your phone number, e.g. 079 123 4567.', 'اكتب رقمك، مثلاً ٠٧٩ ١٢٣ ٤٥٦٧.');
+  if (!okEmail(S.email)) E.email = L('Enter a valid email — we send your ticket there.', 'اكتب إيميل صحيح — بنبعتلك التذكرة عليه.');
+  if (!IMG) E.proof = L('Attach a screenshot of your CliQ transfer.', 'ارفق سكرين شوت لتحويل كليك.');
+  return E;
+}
+function showErrors(E, focus){
+  ['pass', 'name', 'phone', 'email', 'proof'].forEach(function(k){
+    $('err-' + k).textContent = E[k] || '';
+    var inp = k === 'pass' ? null : k === 'proof' ? null : $(k);
+    if (inp) { if (E[k]) inp.setAttribute('aria-invalid', 'true'); else inp.removeAttribute('aria-invalid'); }
+  });
+  if (!focus) return;
+  var first = ['pass', 'name', 'phone', 'email', 'proof'].filter(function(k){ return E[k]; })[0];
+  var el = first === 'pass' ? document.querySelector('input[name=pass]') : $(first === 'proof' ? 'file' : first);
+  if (el) { el.focus({preventScroll: true}); (first === 'proof' ? $('drop') : el).scrollIntoView({behavior: 'smooth', block: 'center'}); }
+}
+
+/* ---------- render ---------- */
+function renderPasses(){
+  var P = INFO.passes, h = '';
+  Object.keys(P).forEach(function(k){
+    var p = P[k], perks = AR ? p.perks_ar : p.perks_en, showWas = INFO.earlybird && p.was && p.was > p.price;
+    h += '<label class="pc cut12"><input type="radio" name="pass" value="' + esc(k) + '"' + (S.pass === k ? ' checked' : '') + '>' +
+         '<span class="top"><span class="nm">' + esc(L(p.en, p.ar)) + '</span>' + (showWas ? '<del class="was"><span class="vh">' + L('was ', 'بدل ') + '</span>' + N(p.was) + '</del>' : '') +
+         '<b>' + N(p.price) + '</b><span class="mono" style="opacity:.6">JOD</span></span>' +
+         '<ul>' + (perks || []).map(function(x){ return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></label>';
+  });
+  $('passes').innerHTML = h;
+}
+function renderDynamic(){
+  var pr = price(), days = INFO.review_days;
+  $('ebPill').hidden = !INFO.earlybird;
+  $('dek').textContent = L('Early-bird prices. Pay with CliQ, upload your proof, and we confirm your ticket within ' + days + ' days.',
+                           'أسعار الحجز المبكر. ادفع عبر كليك، ارفع الإثبات، ومنأكد تذكرتك خلال ' + daysAr(days) + '.');
+  $('alias').textContent = INFO.alias;
+  $('sendLine').innerHTML = pr == null
+    ? esc(L('Choose a pass above to see the amount.', 'اختار الباس فوق لتشوف المبلغ.'))
+    : L('Send <b>' + pr + ' JOD</b> via CliQ to the alias:', 'حوّل <b>' + arNum(pr) + ' د.أ</b> عبر كليك على الـ alias:');
+  $('submit').innerHTML = (pr == null ? L('Submit payment proof', 'ابعت إثبات الدفع') : L('Submit — ' + pr + ' JOD', 'ابعت — ' + arNum(pr) + ' د.أ')) + ' <span aria-hidden="true">' + L('→', '←') + '</span>';
+  $('reviewNote').textContent = L('We check every transfer by hand and confirm within ' + days + ' days. Your details stay saved on this device while you switch to your bank app.',
+                                  'منراجع كل تحويل يدوياً ومنأكد خلال ' + daysAr(days) + '. معلوماتك محفوظة على هالجهاز لحد ما تبعت — حتى لو طلعت لتطبيق البنك.');
+  $('dropLabel').innerHTML = IMG
+    ? '<img class="cut8" src="' + IMG + '" alt=""><span>' + L('Screenshot attached ✓ — tap to change', 'السكرين شوت مرفق ✓ — اضغط للتغيير') + '</span>'
+    : '<span>' + L('Tap to attach the screenshot of your CliQ transfer', 'اضغط لترفق سكرين شوت تحويل كليك') + '</span>';
+  $('drop').classList.toggle('ok', !!IMG);
+}
+function i18n(){
+  document.querySelectorAll('[data-i]').forEach(function(el){
+    if (!el.dataset.en) { var p = el.innerHTML.split('|'); el.dataset.en = p[0]; el.dataset.ar = p[1] || p[0]; }
+    el.innerHTML = AR ? el.dataset.ar : el.dataset.en;
+  });
+  document.documentElement.lang = AR ? 'ar' : 'en'; document.body.dir = AR ? 'rtl' : 'ltr';
+  $('lang').textContent = AR ? 'EN' : 'عربي';
+  renderPasses(); renderDynamic();
+  document.querySelectorAll('[data-al]').forEach(function(c){ var p = c.dataset.al.split('|'); c.setAttribute('aria-label', AR ? p[1] : p[0]); });
+  if (TRIED) showErrors(errorsFor(), false);
+}
+
+/* ---------- draft ---------- */
+var saveT;
+function save(){ clearTimeout(saveT); saveT = setTimeout(function(){ try { localStorage.setItem('tk-draft', JSON.stringify(S)); } catch(e){} }, 300); }
+try { var dr = JSON.parse(localStorage.getItem('tk-draft') || 'null'); if (dr) S = Object.assign(S, dr); } catch(e){}
+var qp = new URLSearchParams(location.search).get('pass'); if (qp) S.pass = qp;
+['name', 'phone', 'email'].forEach(function(k){ $(k).value = S[k] || ''; });
+
+/* ---------- events ---------- */
+$('form').addEventListener('change', function(e){
+  if (e.target.name === 'pass') { S.pass = e.target.value; save(); renderDynamic(); if (TRIED) showErrors(errorsFor(), false); }
+});
+['name', 'phone', 'email'].forEach(function(k){
+  $(k).addEventListener('input', function(){ S[k] = this.value; save(); if (TRIED) showErrors(errorsFor(), false); });
+  $(k).addEventListener('focusout', function(){
+    if (TRIED || !this.value) return;
+    var bad = (k === 'phone' && !normPhone(this.value)) || (k === 'email' && !okEmail(this.value));
+    $('err-' + k).textContent = bad ? errorsFor()[k] : '';
+    if (bad) this.setAttribute('aria-invalid', 'true'); else this.removeAttribute('aria-invalid');
+  });
+});
+$('copy').addEventListener('click', function(){
+  var b = this;
+  var done = function(){ b.textContent = L('Copied ✓', 'انتسخ ✓'); setTimeout(function(){ b.innerHTML = AR ? b.dataset.ar : b.dataset.en; }, 1400); };
+  var fallback = function(){ var t = document.createElement('textarea'); t.value = INFO.alias; t.style.position = 'fixed'; t.style.opacity = '0'; document.body.appendChild(t); t.select(); try { document.execCommand('copy'); done(); } catch(e){} t.remove(); };
+  if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(INFO.alias).then(done, fallback); else fallback();
+});
+$('file').addEventListener('change', function(){
+  var f = this.files[0]; if (!f) return;
+  var url = URL.createObjectURL(f), img = new Image();
+  img.onload = function(){
+    var k = Math.min(1, 1600 / Math.max(img.width, img.height)), c = document.createElement('canvas');
+    c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
+    c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(url);
+    IMG = c.toDataURL('image/jpeg', .85); renderDynamic(); if (TRIED) showErrors(errorsFor(), false);
+  };
+  img.onerror = function(){ URL.revokeObjectURL(url); $('err-proof').textContent = L("We couldn't read that image — try a screenshot (JPG or PNG).", 'ما قدرنا نقرأ الصورة — جرّب سكرين شوت.'); };
+  img.src = url;
+});
+$('form').addEventListener('submit', function(e){
+  e.preventDefault(); if (SENDING) return;
+  TRIED = true; $('formErr').textContent = '';
+  var E = errorsFor(), n = Object.keys(E).length;
+  if (n) { $('formErr').textContent = n === 1 ? L('1 thing needs fixing.', 'في شي واحد بحاجة تعديل.') : L(n + ' things need fixing.', arNum(n) + ' أشياء بحاجة تعديل.'); showErrors(E, true); return; }
+  SENDING = true; var b = $('submit'); b.disabled = true; var label = b.innerHTML; b.textContent = L('Uploading…', 'عم نرفع…');
+  fetch('/api/ticket-buy.php', {method: 'POST', headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({pass: S.pass, name: S.name.trim(), phone: S.phone, email: S.email.trim(), proof_b64: IMG, _hp: $('hp').value})})
+  .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(j){ return {r: r, j: j}; }); })
+  .then(function(x){
+    SENDING = false; b.disabled = false; b.innerHTML = label;
+    if (x.r.ok && x.j.ok) return success(x.j);
+    var f = x.j.field, msg = x.j.error || L('Something went wrong (HTTP ' + x.r.status + ').', 'صار خطأ (HTTP ' + x.r.status + ').');
+    if (f && $('err-' + f)) { var E2 = {}; E2[f] = msg; showErrors(E2, true); } else $('formErr').textContent = msg;
+  })
+  .catch(function(){ SENDING = false; b.disabled = false; b.innerHTML = label; $('formErr').textContent = L("Couldn't reach the server — check your connection and try again.", 'ما قدرنا نوصل للسيرفر — تأكد من الإنترنت وجرّب كمان مرة.'); });
+});
+function drawQR(canvas, text){
+  var qr = qrcode(0, 'M'); qr.addData(text); qr.make();
+  var n = qr.getModuleCount(), q = 4, cell = Math.max(4, Math.floor(440 / (n + q * 2))), dim = cell * (n + q * 2);
+  canvas.width = canvas.height = dim;
+  var c = canvas.getContext('2d'); c.fillStyle = '#FFFEEC'; c.fillRect(0, 0, dim, dim); c.fillStyle = '#0F010A';
+  for (var r = 0; r < n; r++) for (var k = 0; k < n; k++) if (qr.isDark(r, k)) c.fillRect((k + q) * cell, (r + q) * cell, cell, cell);
+}
+function ticketImage(qrCanvas, name, pass, ref){
+  var w = qrCanvas.width, pad = 28, c = document.createElement('canvas'); c.width = w + pad * 2; c.height = w + pad * 2 + 120;
+  var x = c.getContext('2d'); x.fillStyle = '#0F010A'; x.fillRect(0, 0, c.width, c.height);
+  x.drawImage(qrCanvas, pad, pad);
+  x.fillStyle = '#EF5229'; x.font = '700 18px "IBM Plex Mono", monospace'; x.fillText('MEETPIXILS · ' + ref, pad, w + pad + 36);
+  x.fillStyle = '#FFFEEC'; x.font = '800 30px Poppins, Cairo, sans-serif'; x.fillText(name, pad, w + pad + 76);
+  x.fillStyle = 'rgba(255,254,236,.7)'; x.font = '400 20px Poppins, Cairo, sans-serif'; x.fillText(pass, pad, w + pad + 106);
+  return c.toDataURL('image/png');
+}
+function success(j){
+  var url = location.origin + '/ticket/?t=' + j.token;
+  drawQR($('qr'), url);
+  $('doneRef').textContent = j.ref;
+  $('openTicket').href = url;
+  var img = ticketImage($('qr'), S.name.trim(), INFO.passes[S.pass] ? L(INFO.passes[S.pass].en, INFO.passes[S.pass].ar) : '', j.ref);
+  $('dlQR').href = img; $('dlQR').setAttribute('download', 'meetpixils-ticket-' + j.ref + '.png');
+  $('waSelf').href = 'https://wa.me/?text=' + encodeURIComponent(L('My MeetPixils ticket (' + j.ref + '): ', 'تذكرتي لميت بكسلز (' + j.ref + '): ') + url);
+  if (navigator.share) { $('shareBtn').hidden = false; $('shareBtn').onclick = function(){ navigator.share({title: 'MeetPixils ticket ' + j.ref, url: url}).catch(function(){}); }; }
+  var due = dueBy(null, INFO.review_days);
+  $('doneText').textContent = L("Save this QR — it's your ticket. It shows “pending” now and turns into your full ticket when we approve your payment — expected by " + due + ". We'll email you the moment it's approved.",
+                                'احفظ هالكود — هاد تذكرتك. هلأ بيبين «قيد المراجعة» وبيتحوّل لتذكرتك كاملة لما نوافق عالدفع — متوقع قبل ' + due + '. ومنبعتلك إيميل أول ما تتأكد.');
+  $('track3').innerHTML = '<div class="done">✓ ' + L('Proof sent', 'انبعت الإثبات') + '</div><div class="now">' + L('Payment check', 'مراجعة الدفع') + '</div><div>' + L('Ticket ready', 'التذكرة جاهزة') + '</div>';
+  try { localStorage.removeItem('tk-draft'); localStorage.setItem('tk-last', url); } catch(e){}
+  $('form').hidden = true; $('done').hidden = false; $('done').focus({preventScroll: true});
+  $('done').scrollIntoView({behavior: 'smooth', block: 'start'});
+}
+$('lang').addEventListener('click', function(){ AR = !AR; try { localStorage.setItem('mp-lang', AR ? 'ar' : 'en'); } catch(e){} i18n(); });
+try { AR = localStorage.getItem('mp-lang') === 'ar'; } catch(e){}
+i18n();
+fetch('/api/ticket-info.php', {cache: 'no-store'}).then(function(r){ return r.ok ? r.json() : null; })
+  .then(function(j){ if (j && j.passes) { INFO = j; renderPasses(); renderDynamic(); } }).catch(function(){});
+})();
+</script></body></html>
